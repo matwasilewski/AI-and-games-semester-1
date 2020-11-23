@@ -1,4 +1,4 @@
-package MKAgent;
+package java;
 /**
  * Creates messages to be sent and interprets messages received.
  */

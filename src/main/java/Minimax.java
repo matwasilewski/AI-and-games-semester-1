@@ -1,4 +1,4 @@
-package MKAgent;
+package java;
 
 public class Minimax {
     public int maxDepth = 10;

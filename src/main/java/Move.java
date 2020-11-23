@@ -1,4 +1,4 @@
-package MKAgent;
+package java;
 
 /**
  * Represents a move (not a turn) in the Kalah game.

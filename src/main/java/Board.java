@@ -1,4 +1,4 @@
-package MKAgent;
+package java;
 import java.util.Observable;
 
 /**
@@ -41,7 +41,7 @@ public class Board extends Observable implements Cloneable
      * @param side A side of the board.
      * @return The index of side "side" for the first dimension of "board".
      */
-    private static int indexOfSide (MKAgent.Side side)
+    private static int indexOfSide (java.Side side)
     {
     	switch (side)
     	{
@@ -125,7 +125,7 @@ public class Board extends Observable implements Cloneable
      * @return The number of seeds in hole "hole" on side "side".
      * @throws IllegalArgumentException if the hole number is invalid.
      */
-    public int getSeeds (MKAgent.Side side, int hole) throws IllegalArgumentException
+    public int getSeeds (java.Side side, int hole) throws IllegalArgumentException
     {
     	if (hole < 1 || hole > holes)
     		throw new IllegalArgumentException("Hole number must be between 1 and " + (board[NORTH_ROW].length - 1) + " but was " + hole + ".");
@@ -141,7 +141,7 @@ public class Board extends Observable implements Cloneable
      * @throws IllegalArgumentException if any of the arguments is outside of
      *         the valid range.
      */
-    public void setSeeds (MKAgent.Side side, int hole, int seeds) throws IllegalArgumentException
+    public void setSeeds (java.Side side, int hole, int seeds) throws IllegalArgumentException
     {
     	if (hole < 1 || hole > holes)
     		throw new IllegalArgumentException("Hole number must be between 1 and " + (board[NORTH_ROW].length - 1) + " but was " + hole + ".");
@@ -160,7 +160,7 @@ public class Board extends Observable implements Cloneable
      * @throws IllegalArgumentException if any of the arguments is outside of
      *         the valid range.
      */
-    public void addSeeds (MKAgent.Side side, int hole, int seeds) throws IllegalArgumentException
+    public void addSeeds (java.Side side, int hole, int seeds) throws IllegalArgumentException
     {
     	if (hole < 1 || hole > holes)
     		throw new IllegalArgumentException("Hole number must be between 1 and " + (board[NORTH_ROW].length - 1) + " but was " + hole + ".");
@@ -179,7 +179,7 @@ public class Board extends Observable implements Cloneable
      *         side "side".
      * @throws IllegalArgumentException if the hole number is invalid.
      */
-    public int getSeedsOp (MKAgent.Side side, int hole) throws IllegalArgumentException
+    public int getSeedsOp (java.Side side, int hole) throws IllegalArgumentException
     {
     	if (hole < 1 || hole > holes)
     		throw new IllegalArgumentException("Hole number must be between 1 and " + holes + " but was " + hole + ".");
@@ -196,7 +196,7 @@ public class Board extends Observable implements Cloneable
      * @throws IllegalArgumentException if any of the arguments is outside of
      *         the valid range.
      */
-    public void setSeedsOp (MKAgent.Side side, int hole, int seeds) throws IllegalArgumentException
+    public void setSeedsOp (java.Side side, int hole, int seeds) throws IllegalArgumentException
     {
     	if (hole < 1 || hole > holes)
     		throw new IllegalArgumentException("Hole number must be between 1 and " + (board[NORTH_ROW].length - 1) + " but was " + hole + ".");
@@ -216,7 +216,7 @@ public class Board extends Observable implements Cloneable
      * @throws IllegalArgumentException if any of the arguments is outside of
      *         the valid range.
      */
-    public void addSeedsOp (MKAgent.Side side, int hole, int seeds) throws IllegalArgumentException
+    public void addSeedsOp (java.Side side, int hole, int seeds) throws IllegalArgumentException
     {
     	if (hole < 1 || hole > holes)
     		throw new IllegalArgumentException("Hole number must be between 1 and " + (board[NORTH_ROW].length - 1) + " but was " + hole + ".");
@@ -232,7 +232,7 @@ public class Board extends Observable implements Cloneable
      * @param side The side the store is located on.
      * @return The number of seeds in the store.
      */
-    public int getSeedsInStore (MKAgent.Side side)
+    public int getSeedsInStore (java.Side side)
     {
 		return board[indexOfSide(side)][0];
     }
@@ -243,7 +243,7 @@ public class Board extends Observable implements Cloneable
      * @param seeds The number of seeds that shall be in the store afterwards (>= 0).
      * @throws IllegalArgumentException if the number of seeds is invalid.
      */
-    public void setSeedsInStore (MKAgent.Side side, int seeds) throws IllegalArgumentException
+    public void setSeedsInStore (java.Side side, int seeds) throws IllegalArgumentException
     {
     	if (seeds < 0)
     		throw new IllegalArgumentException("There has to be a non-negative number of seeds, but " + seeds + " were requested.");
@@ -258,7 +258,7 @@ public class Board extends Observable implements Cloneable
      * @param seeds The number (>= 0) of seeds to put into (add to) the store.
      * @throws IllegalArgumentException if the number of seeds is invalid.
      */
-    public void addSeedsToStore (MKAgent.Side side, int seeds) throws IllegalArgumentException
+    public void addSeedsToStore (java.Side side, int seeds) throws IllegalArgumentException
     {
     	if (seeds < 0)
     		throw new IllegalArgumentException("There has to be a non-negative number of seeds, but " + seeds + " were requested.");

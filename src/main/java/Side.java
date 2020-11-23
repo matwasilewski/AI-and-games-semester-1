@@ -1,4 +1,4 @@
-package MKAgent;
+package java;
 /**
  * The side of the Kalah board a player can choose.
  */
