@@ -97,8 +97,6 @@ public class Main
 					System.err.println(e.getMessage());
 				}
 			}
-		} catch (InvalidMessageException var9) {
-			System.err.println(var9.getMessage());
 		} catch (IOException var10) {
 			System.err.println("This shouldn't happen: " + var10.getMessage());
 		} catch (Exception var11) {
