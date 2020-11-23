@@ -10,7 +10,7 @@ public class Heuristic {
      */
 
     public static int getScore(Board board, Side agentSide){
-        // TODO
+        // TODO 2
         return 0;
     }
 
