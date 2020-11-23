@@ -54,6 +54,55 @@ public class Main
 	 */
 	public static void main(String[] args)
 	{
-		// TODO: implement
+		String message;
+		boolean agentsMove;
+		Board board;
+		Side agentsSide;
+		boolean secondTurn;
+
+		try {
+			while(true) {
+				System.err.println();
+				message = recvMsg();
+				System.err.print("Received: " + message);
+				try {
+					MsgType messageType = Protocol.getMessageType(message);
+
+					switch (messageType) {
+						case START:
+							System.err.println("A start.");
+							boolean first = Protocol.interpretStartMsg(message);
+
+							System.err.println("Bot is the starting player: " + first);
+
+							if (first) {
+								agentsSide = Side.SOUTH;
+								board = new Board(7, 7);
+								message = Protocol.createMoveMsg(Minimax.getMove(board));
+								System.out.print(message);
+								break;
+							}
+
+							agentsSide = Side.NORTH;
+							secondTurn = true;
+							break;
+						case STATE:
+							// TODO 0.1
+							break;
+						case END:
+							System.err.println("An end. Bye bye!");
+							return;
+					}
+				}catch (InvalidMessageException e) {
+					System.err.println(e.getMessage());
+				}
+			}
+		} catch (InvalidMessageException var9) {
+			System.err.println(var9.getMessage());
+		} catch (IOException var10) {
+			System.err.println("This shouldn't happen: " + var10.getMessage());
+		} catch (Exception var11) {
+			System.err.println("This shouldn't happen: " + var11.getMessage());
+		}
 	}
 }

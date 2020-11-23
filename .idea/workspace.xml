@@ -7,9 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfa82c92-4626-42b2-b6ad-06a3158224b8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/minimaxAgent/src/MKAgent/Heuristic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/minimaxAgent/src/MKAgent/Kalah.java" beforeDir="false" afterPath="$PROJECT_DIR$/minimaxAgent/src/MKAgent/Kalah.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/minimaxAgent/src/MKAgent/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/minimaxAgent/src/MKAgent/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
