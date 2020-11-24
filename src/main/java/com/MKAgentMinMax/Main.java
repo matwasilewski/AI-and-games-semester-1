@@ -1,4 +1,11 @@
-package java;
+package com.MKAgentMinMax;
+
+import com.MKAgent.MsgType;
+import com.MKAgent.Side;
+import com.MKAgent.Board;
+import com.MKAgent.Protocol;
+import com.MKAgent.InvalidMessageException;
+
 import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;

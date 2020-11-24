@@ -1,4 +1,6 @@
-package java;
+package com.MKAgent;
+
+import com.MKAgent.Side;
 
 import java.util.ArrayList;
 

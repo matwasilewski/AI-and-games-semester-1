@@ -1,4 +1,8 @@
-package java;
+package com.MKAgentMinMax;
+
+import com.MKAgent.Board;
+import com.MKAgent.Side;
+
 
 public class Heuristic {
 
