@@ -1,4 +1,6 @@
-package MKAgent;
+package com.MKAgentMinMax;
+
+import com.MKAgent.Board;
 
 public class Minimax {
     public int maxDepth = 10;

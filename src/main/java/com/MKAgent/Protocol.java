@@ -1,4 +1,10 @@
-package MKAgent;
+package com.MKAgent;
+
+import com.MKAgent.MsgType;
+import com.MKAgent.InvalidMessageException;
+import com.MKAgent.Board;
+import com.MKAgent.Side;
+
 /**
  * Creates messages to be sent and interprets messages received.
  */
