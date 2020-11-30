@@ -246,7 +246,13 @@ public class Kalah
 	 */
 	public static ArrayList<Move> getPossibleMovesForPlayer(Board board, Side side){
     	// TODO 1.1
-		return new ArrayList<Move>();
+		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		for (int i = 1; i <= board.getNoOfHoles(); i++){
+			if (board.getSeeds(side, i) != 0) {
+				possibleMoves.add(new Move(side, i));
+			}
+		}
+		return possibleMoves;
 	}
 }
 
