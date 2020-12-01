@@ -1,16 +1,16 @@
 package com.MKAgentMinMax;
 
-import com.MKAgent.MsgType;
-import com.MKAgent.Side;
-import com.MKAgent.Board;
-import com.MKAgent.Protocol;
-import com.MKAgent.InvalidMessageException;
+import com.MKAgent.*;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+
+import static com.MKAgent.Protocol.*;
+import static com.MKAgent.Side.*;
+import static com.MKAgentMinMax.Heuristic.*;
 
 /**
  * The main application class. It also provides methods for communication
@@ -62,39 +62,58 @@ public class Main
 	public static void main(String[] args)
 	{
 		String message;
-		boolean agentsMove;
-		Board board;
-		Side agentsSide;
-		boolean secondTurn;
+		Kalah currentGame = new Kalah(new Board(7, 7));
+		Side agentsSide = SOUTH;
+		boolean secondTurn = false;
 
 		try {
 			while(true) {
 				System.err.println();
+
 				message = recvMsg();
 				System.err.print("Received: " + message);
-				try {
-					MsgType messageType = Protocol.getMessageType(message);
 
-					switch (messageType) {
+				try {
+
+					switch (getMessageType(message)) {
 						case START:
 							System.err.println("A start.");
-							boolean first = Protocol.interpretStartMsg(message);
 
-							System.err.println("Bot is the starting player: " + first);
+							boolean isAgentStartingFirst = interpretStartMsg(message);
 
-							if (first) {
-								agentsSide = Side.SOUTH;
-								board = new Board(7, 7);
-								message = Protocol.createMoveMsg(Minimax.getMove(board));
-								System.out.print(message);
+							System.err.println("Bot is the starting player: " + isAgentStartingFirst);
+
+							if (isAgentStartingFirst) {
+								agentsSide = SOUTH;
+
+								performBestMove(currentGame, agentsSide);
+
+								break;
+							} else {
+								agentsSide = NORTH;
+
+								secondTurn = true;
+
 								break;
 							}
-
-							agentsSide = Side.NORTH;
-							secondTurn = true;
-							break;
 						case STATE:
-							// TODO 0.1
+							MoveTurn moveTurn = interpretStateMsg(message, currentGame.getBoard());
+
+							if(moveTurn.end) {
+								System.err.println("An end. Bye bye!");
+
+							} else if (moveTurn.again) {
+								if(secondTurn) {
+									performBestMoveOrSwap(currentGame, agentsSide);
+									secondTurn = false;
+								} else {
+									performBestMove(currentGame, agentsSide);
+								}
+							} else {
+								Move opponentsMove = new Move(agentsSide.opposite(), moveTurn.move);
+								currentGame.makeMove(opponentsMove);
+							}
+
 							break;
 						case END:
 							System.err.println("An end. Bye bye!");
@@ -109,5 +128,25 @@ public class Main
 		} catch (Exception var11) {
 			System.err.println("This shouldn't happen: " + var11.getMessage());
 		}
+	}
+
+	private static void performBestMoveOrSwap(Kalah currentGame, Side agentsSide) {
+		if(currentSideIsBetter(currentGame, agentsSide)) {
+			performBestMove(currentGame, agentsSide);
+		} else {
+			sendMsg(createSwapMsg());
+			agentsSide = agentsSide.opposite();
+		}
+	}
+
+	private static boolean currentSideIsBetter(Kalah currentGame, Side agentsSide) {
+		return getScore(currentGame.getBoard(), agentsSide) > getScore(currentGame.getBoard(), agentsSide.opposite());
+	}
+
+
+	private static void performBestMove(Kalah currentGame, Side agentsSide) {
+		Move bestMove = Minimax.getBestMove(currentGame, agentsSide);
+		sendMsg(createMoveMsg(bestMove.getHole()));
+		currentGame.makeMove(bestMove);
 	}
 }
