@@ -238,15 +238,17 @@ public class Kalah
     	return holesEmpty(board, Side.NORTH) || holesEmpty(board, Side.SOUTH);
     }
 
-	/**
-	 * Checks whether the game is over (based on the board).
-	 * @param board The board to check the game state for.
-	 * @param side Side of the current player.
-	 * @return ArrayList of all the possible moves
-	 */
 	public static ArrayList<Move> getPossibleMovesForPlayer(Board board, Side side){
     	// TODO 1.1
-		return new ArrayList<Move>();
+		ArrayList<Move> possibleMoves = new ArrayList<Move>();
+		for (int i = 1; i <= board.getNoOfHoles(); i++){
+			Move move = new Move(side, i);
+			if (isLegalMove(board, move)) {
+				possibleMoves.add(move);
+			}
+
+		}
+		return possibleMoves;
 	}
 }
 
