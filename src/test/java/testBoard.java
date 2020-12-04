@@ -16,6 +16,7 @@ public class testBoard {
         specificCase();
     }
 
+    @Test
     public static void startState() {
         System.out.println("Testing initial state...");
 
@@ -23,7 +24,6 @@ public class testBoard {
         Kalah kalah = new Kalah(board);
 
         ArrayList<Move> output = kalah.getPossibleMovesForPlayer(board, Side.SOUTH);
-        //System.out.println(output);
 
         assertFalse(output.isEmpty());
 
@@ -31,7 +31,7 @@ public class testBoard {
             assertTrue(board.getSeeds(Side.SOUTH, move.getHole()) != 0);
         }
     }
-
+    @Test
     public static void emptyList() {
         System.out.println("Testing all holes being empty...");
         int numOfHoles = 6;
@@ -45,7 +45,7 @@ public class testBoard {
 
         assertTrue(output.isEmpty());
     }
-
+    @Test
     public static void specificCase(){
         System.out.println("Testing a specific position with a single option...");
         int numOfHoles = 6;
