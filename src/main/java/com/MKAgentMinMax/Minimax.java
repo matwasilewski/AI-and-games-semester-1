@@ -8,15 +8,17 @@ public class Minimax {
     public static int maxDepth = 10;
     public static Side playerSide = Side.NORTH;
 
-    static Heuristic heuristic = new Heuristic();
-
     public static int getMove(Board board){
-        return dfs(board, playerSide, true,0).getMove().getHole();
+        boolean maxPlayer = true;
+        if(playerSide == Side.SOUTH){
+            maxPlayer = false;
+        }
+        return dfs(board, playerSide, maxPlayer,0).getMove().getHole();
     }
 
     public static MinimaxMove dfs(Board board, Side currentSide, boolean maxPlayer,  int currentDepth){
         if(currentDepth == maxDepth){
-            return new MinimaxMove(heuristic.getScore(board, playerSide));
+            return new MinimaxMove(Heuristic.getScore(board, playerSide));
         }
 
         if(Kalah.gameOver(board)){
@@ -65,5 +67,9 @@ public class Minimax {
         }
 
         return bestMoveToTake;
+    }
+
+    public void setPlayerSide(Side side){
+        playerSide = side;
     }
 }

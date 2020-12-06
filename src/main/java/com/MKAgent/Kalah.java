@@ -237,7 +237,6 @@ public class Kalah
 
     	return holesEmpty(board, Side.NORTH) || holesEmpty(board, Side.SOUTH);
     }
-
 	/**
 	 * Gets score different
 	 * @param board The board to check the game state for.

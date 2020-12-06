@@ -304,21 +304,5 @@ public class Board extends Observable implements Cloneable
 
 		return boardString.toString();
 	}
-
-//	public ArrayList<Move> getPossibleMovesForPlayer(Side side){
-//		ArrayList<Move> possibleMoves = new ArrayList<>() ;
-//
-//		for (int i=holes; i >= 1; i--)
-//			if(Kalah.isLegalMove(board, board[NORTH_ROW][i] + " id: " + i){
-//
-//			}
-//		}
-//		boardString.append("\n");
-//		for (int i=1; i <= holes; i++)
-//			boardString.append(board[SOUTH_ROW][i] + " id: " + i + "  ");
-//		boardString.append("--  " + board[SOUTH_ROW][0] + "\n");
-//
-//		return possibleMoves;
-//	}
 }
 

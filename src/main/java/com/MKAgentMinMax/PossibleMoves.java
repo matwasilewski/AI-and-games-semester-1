@@ -1,6 +1,7 @@
 package com.MKAgentMinMax;
 
 import com.MKAgent.Board;
+import com.MKAgent.Kalah;
 import com.MKAgent.Move;
 import com.MKAgent.Side;
 
@@ -14,11 +15,15 @@ public class PossibleMoves {
      * @return ArrayList of all the possible moves
      */
     public static ArrayList<Move> getPossibleMovesForPlayer(Board board, Side side){
-        // TODO 1.1
-        ArrayList<Move> all_possbile_moves_for_first_move = new ArrayList<>();
-        all_possbile_moves_for_first_move.add(new Move(Side.NORTH, 2));
-        all_possbile_moves_for_first_move.add(new Move(Side.NORTH, 3));
+        // TODO Should include the swap move
+        ArrayList<Move> possibleMoves = new ArrayList<Move>();
+        for (int i = 1; i <= board.getNoOfHoles(); i++){
+            Move move = new Move(side, i);
+            if (Kalah.isLegalMove(board, move)) {
+                possibleMoves.add(move);
+            }
 
-        return all_possbile_moves_for_first_move;
+        }
+        return possibleMoves;
     }
 }
