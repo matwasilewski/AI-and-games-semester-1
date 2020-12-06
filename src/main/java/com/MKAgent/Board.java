@@ -3,7 +3,7 @@ package com.MKAgent;
 import com.MKAgent.Side;
 
 
-
+import java.util.ArrayList;
 import java.util.Observable;
 
 /**
@@ -56,9 +56,8 @@ public class Board extends Observable implements Cloneable
     	}
     }
 
-
     /**
-     * Creates a new board.
+     * Creates a new board from the template
      * 
      * @param holes The number of holes per side (must be >= 1).
      * @param seeds The initial number of seeds per hole (must be >= 0). The
@@ -82,6 +81,24 @@ public class Board extends Observable implements Cloneable
     		board[SOUTH_ROW][i] = seeds;
     	}
     }
+
+	/**
+	 * Creates a new board.
+	 *
+	 * @param holes The number of holes per side (must be >= 1).
+	 * @param seeds The initial number of seeds per hole (must be >= 0). The
+	 *        stores are empty initially.
+	 * @throws IllegalArgumentException if any of the arguments is outside of
+	 *         the valid range.
+	 */
+	public Board (int holes, int[][] template_board) throws IllegalArgumentException
+	{
+		if (holes < 1)
+			throw new IllegalArgumentException("There has to be at least one hole, but " + holes + " were requested.");
+
+		this.holes = holes;
+		board = template_board;
+	}
     
 	/**
      * Creates a new board as the copy of a given one. Both copies can then be
@@ -279,13 +296,29 @@ public class Board extends Observable implements Cloneable
 
 		boardString.append(board[NORTH_ROW][0] + "  --");
 		for (int i=holes; i >= 1; i--)
-			boardString.append("  " + board[NORTH_ROW][i]);
+			boardString.append("  " + board[NORTH_ROW][i] + " id: " + i);
 		boardString.append("\n");
 		for (int i=1; i <= holes; i++)
-			boardString.append(board[SOUTH_ROW][i] + "  ");
+			boardString.append(board[SOUTH_ROW][i] + " id: " + i + "  ");
 		boardString.append("--  " + board[SOUTH_ROW][0] + "\n");
 
 		return boardString.toString();
 	}
+
+//	public ArrayList<Move> getPossibleMovesForPlayer(Side side){
+//		ArrayList<Move> possibleMoves = new ArrayList<>() ;
+//
+//		for (int i=holes; i >= 1; i--)
+//			if(Kalah.isLegalMove(board, board[NORTH_ROW][i] + " id: " + i){
+//
+//			}
+//		}
+//		boardString.append("\n");
+//		for (int i=1; i <= holes; i++)
+//			boardString.append(board[SOUTH_ROW][i] + " id: " + i + "  ");
+//		boardString.append("--  " + board[SOUTH_ROW][0] + "\n");
+//
+//		return possibleMoves;
+//	}
 }
 

@@ -121,9 +121,9 @@ public class Kalah
 		    	collects the most counters is the winner."
 		*/
 
-
     	// pick seeds:
     	int seedsToSow = board.getSeeds(move.getSide(), move.getHole());
+
     	board.setSeeds(move.getSide(), move.getHole(), 0);
 
     	int holes = board.getNoOfHoles();
@@ -239,14 +239,13 @@ public class Kalah
     }
 
 	/**
-	 * Checks whether the game is over (based on the board).
+	 * Gets score different
 	 * @param board The board to check the game state for.
-	 * @param side Side of the current player.
-	 * @return ArrayList of all the possible moves
+	 * @return result > 0 when North is winning, result < 0 when South is winning
 	 */
-	public static ArrayList<Move> getPossibleMovesForPlayer(Board board, Side side){
-    	// TODO 1.1
-		return new ArrayList<Move>();
+	public static int getScoreDifference (Board board)
+	{
+		return board.getSeedsInStore(Side.NORTH) - board.getSeedsInStore(Side.SOUTH);
 	}
 }
 
