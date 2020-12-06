@@ -4,7 +4,7 @@ import com.MKAgent.Board;
 import com.MKAgent.Side;
 
 
-public class Heuristic {
+public class Heuristic{
 
     /**
      * should return the score based on heuristics.
@@ -17,5 +17,4 @@ public class Heuristic {
         // TODO 2
         return 0;
     }
-
 }
