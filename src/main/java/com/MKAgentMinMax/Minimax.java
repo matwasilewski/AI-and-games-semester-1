@@ -9,14 +9,10 @@ public class Minimax {
     public static Side playerSide = Side.NORTH;
 
     public static int getMove(Board board){
-        boolean maxPlayer = true;
-        if(playerSide == Side.SOUTH){
-            maxPlayer = false;
-        }
-        return dfs(board, playerSide, maxPlayer,0).getMove().getHole();
+        return dfs(board, playerSide,0).getMove().getHole();
     }
 
-    public static MinimaxMove dfs(Board board, Side currentSide, boolean maxPlayer,  int currentDepth){
+    public static MinimaxMove dfs(Board board, Side currentSide, int currentDepth){
         if(currentDepth == maxDepth){
             return new MinimaxMove(Heuristic.getScore(board, playerSide));
         }
@@ -34,15 +30,17 @@ public class Minimax {
         }
 
         int current_score;
-        if(maxPlayer){
+        boolean maxPlayer;
+        if(currentSide == playerSide){
             current_score = Integer.MIN_VALUE;
+            maxPlayer = true;
         }else{
             current_score = Integer.MAX_VALUE;
+            maxPlayer = false;
         }
 
         MinimaxMove bestMoveToTake = new MinimaxMove(current_score);
         MinimaxMove moveMade;
-        boolean nextPlayer = maxPlayer;
 
         // do the dfs over the nodes
         for (Move move: possibleMoves) {
@@ -50,11 +48,7 @@ public class Minimax {
             Board new_board = new Board(board);
             Side nextSide = Kalah.makeMove(new_board, move);
 
-            if(currentSide != nextSide){
-                nextPlayer = !maxPlayer;
-            }
-
-            moveMade = dfs(new_board,nextSide,nextPlayer,currentDepth+1);
+            moveMade = dfs(new_board,nextSide,currentDepth+1);
             moveMade.updateMove(move);
 
             if(maxPlayer && moveMade.getScore() > bestMoveToTake.getScore()){
@@ -67,9 +61,5 @@ public class Minimax {
         }
 
         return bestMoveToTake;
-    }
-
-    public void setPlayerSide(Side side){
-        playerSide = side;
     }
 }
