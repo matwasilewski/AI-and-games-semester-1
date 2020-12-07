@@ -5,7 +5,6 @@ import com.MKAgent.*;
 import static com.MKAgent.Protocol.*;
 import static com.MKAgent.Side.NORTH;
 import static com.MKAgent.Side.SOUTH;
-import static com.MKAgentMinMax.Heuristic.getScore;
 
 public class MKAgent {
 
@@ -55,18 +54,16 @@ public class MKAgent {
     }
 
     private String performBestMoveOrSwap() {
-        if (currentSideIsBetter(this.currentGame, this.agentsSide)) {
-            return performBestMove();
-        } else {
+        MoveOrSwap bestMoveOrSwap = Minimax.getBestMoveOrSwap(this.currentGame, this.agentsSide);
+
+        if (bestMoveOrSwap.isSwap()) {
             this.agentsSide = this.agentsSide.opposite();
             return createSwapMsg();
+        } else {
+            this.currentGame.makeMove(bestMoveOrSwap.getMove());
+            return createMoveMsg(bestMoveOrSwap.getMove().getHole());
         }
     }
-
-    private boolean currentSideIsBetter(Kalah currentGame, Side agentsSide) {
-        return getScore(currentGame.getBoard(), agentsSide) >= getScore(currentGame.getBoard(), agentsSide.opposite());
-    }
-
 
     private String performBestMove() {
         Move bestMove = Minimax.getBestMove(this.currentGame, this.agentsSide);

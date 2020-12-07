@@ -1,9 +1,6 @@
 package com.MKAgentMinMax;
 
-import com.MKAgent.Board;
-import com.MKAgent.Kalah;
-import com.MKAgent.Move;
-import com.MKAgent.Side;
+import com.MKAgent.*;
 
 import static com.MKAgent.Kalah.getPossibleMovesForPlayer;
 
@@ -16,6 +13,9 @@ public class Minimax {
         //return new Move(agentsSide, dfs(currentGame.getBoard(), 0));
     }
 
+    public static MoveOrSwap getBestMoveOrSwap(Kalah currentGame, Side agentsSide) {
+        return new MoveOrSwap(getBestMove(currentGame, agentsSide), false);
+    }
 
     public static int dfs(Board board, int currentDepth) {
         // get all the nodes
