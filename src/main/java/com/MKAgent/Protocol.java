@@ -14,10 +14,12 @@ public class Protocol {
          * "true" if the game is over, "false" otherwise.
          */
         public boolean end;
+
         /**
          * "true" if it's this agent's turn again, "false" otherwise.
          */
         public boolean again;
+
         /**
          * The number of the hole that characterises the move which has been
          * made (the move starts with picking the seeds from the given hole)
@@ -33,7 +35,7 @@ public class Protocol {
      * @param hole The hole to pick the seeds from.
      * @return The message as a string.
      */
-    public static String createMoveMsg(int hole) {
+    public String createMoveMsg(int hole) {
         return "MOVE;" + hole + "\n";
     }
 
@@ -42,7 +44,7 @@ public class Protocol {
      *
      * @return The message as a string.
      */
-    public static String createSwapMsg() {
+    public String createSwapMsg() {
         return "SWAP\n";
     }
 
@@ -76,7 +78,7 @@ public class Protocol {
      * @throws InvalidMessageException if the message is not well-formed.
      * @see #getMessageType(String)
      */
-    public static boolean interpretStartMsg(String msg) throws InvalidMessageException {
+    public boolean interpretStartMsg(String msg) throws InvalidMessageException {
         if (msg.charAt(msg.length() - 1) != '\n')
             throw new InvalidMessageException("Message not terminated with 0x0A character.");
 
@@ -103,7 +105,7 @@ public class Protocol {
      * @throws InvalidMessageException if the message is not well-formed.
      * @see #getMessageType(String)
      */
-    public static MoveTurn interpretStateMsg(String msg, Board board) throws InvalidMessageException {
+    public MoveTurn interpretStateMsg(String msg, Board board) throws InvalidMessageException {
         MoveTurn moveTurn = new MoveTurn();
 
         if (msg.charAt(msg.length() - 1) != '\n')

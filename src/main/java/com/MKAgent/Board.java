@@ -1,9 +1,5 @@
 package com.MKAgent;
 
-import com.MKAgent.Side;
-
-
-
 import java.util.Observable;
 
 /**

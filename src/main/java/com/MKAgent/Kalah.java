@@ -2,100 +2,67 @@ package com.MKAgent;
 
 import java.util.ArrayList;
 
-/**
- * This class deals with moves on a Kalah board.
- */
-public class Kalah {
-    /**
-     * The board to play on.
-     */
+import static com.MKAgent.Move.createNewSwapMove;
+import static com.MKAgent.Side.NORTH;
+import static com.MKAgent.Side.SOUTH;
+
+public class Kalah implements Cloneable {
+
     private final Board board;
 
-    /**
-     * @param board The board to play on.
-     * @throws NullPointerException if "board" is null.
-     */
+    private Side agentsSide = SOUTH;
+
+    private boolean swappable = true;
+
+
     public Kalah(Board board) throws NullPointerException {
         if (board == null)
             throw new NullPointerException();
         this.board = board;
     }
 
-    /**
-     * @return The board this object operates on.
-     */
+
+    public Kalah clone() throws CloneNotSupportedException {
+        Kalah cloneGameState = new Kalah(this.getBoard().clone());
+        cloneGameState.agentsSide = this.agentsSide;
+        cloneGameState.swappable = this.swappable;
+        return cloneGameState;
+    }
+
+    public void setAgentsSide(Side agentsSide) {
+        this.agentsSide = agentsSide;
+    }
+
     public Board getBoard() {
         return board;
     }
 
-    /**
-     * Checks whether a given move is legal on the underlying board. The move
-     * is not actually made.
-     *
-     * @param move The move to check.
-     * @return true if the move is legal, false if not.
-     */
-    public boolean isLegalMove(Move move) {
-        return isLegalMove(board, move);
-    }
-
-    /**
-     * Performs a move on the underlying board. The move must be legal. If
-     * the move terminates the game, the remaining seeds of the opponent are
-     * collected into their store as well (so that all holes are empty).<BR>
-     * The "notifyObservers()" method of the board is called with the "move"
-     * as argument.
-     *
-     * @param move The move to make.
-     * @return The side who's turn it is after the move. Arbitrary if the
-     * game is over.
-     * @see #isLegalMove(Move)
-     * @see #gameOver()
-     * @see java.util.Observable#notifyObservers(Object)
-     */
     public Side makeMove(Move move) {
-        return makeMove(board, move);
+        if(move.isSwap()) {
+            this.swappable = !this.swappable;
+            this.agentsSide = this.agentsSide.opposite();
+            return this.agentsSide.opposite();
+        } else {
+
+            return makeMove(board, move);
+        }
     }
 
-    /**
-     * Checks whether the game is over (based on the board).
-     *
-     * @return "true" if the game is over, "false" otherwise.
-     */
-    public boolean gameOver() {
-        return gameOver(board);
-    }
-
-    /**
-     * Checks whether a given move is legal on a given board. The move
-     * is not actually made.
-     *
-     * @param board The board to check the move for.
-     * @param move  The move to check.
-     * @return true if the move is legal, false if not.
-     */
-    public static boolean isLegalMove(Board board, Move move) {
+    public boolean isLegalMove(Move move) {
         // check if the hole is existent and non-empty:
-        return (move.getHole() <= board.getNoOfHoles())
-                && (board.getSeeds(move.getSide(), move.getHole()) != 0);
+        return (move.getHole() <= this.board.getNoOfHoles())
+                && (this.board.getSeeds(move.getSide(), move.getHole()) != 0);
     }
 
-    /**
-     * Performs a move on a given board. The move must be legal. If
-     * the move terminates the game, the remaining seeds of the opponent are
-     * collected into their store as well (so that all holes are empty).<BR>
-     * The "notifyObservers()" method of the board is called with the "move"
-     * as argument.
-     *
-     * @param board The board to make the move on.
-     * @param move  The move to make.
-     * @return The side who's turn it is after the move. Arbitrary if the
-     * game is over.
-     * @see #isLegalMove(Board, Move)
-     * @see #gameOver(Board)
-     * @see java.util.Observable#notifyObservers(Object)
-     */
-    public static Side makeMove(Board board, Move move) {
+    public ArrayList<Move> getPossibleMovesForAgent() {
+        return getMoves(this.agentsSide);
+    }
+
+    public ArrayList<Move> getPossibleMovesForOpponent() {
+        return getMoves(this.agentsSide.opposite());
+    }
+
+    private Side makeMove(Board board, Move move) {
 		/* from the documentation:
 		  "1. The counters are lifted from this hole and sown in anti-clockwise direction, starting
 		      with the next hole. The player's own kalahah is included in the sowing, but the
@@ -129,8 +96,8 @@ public class Kalah {
         // sow the seeds of the full rounds (if any):
         if (rounds != 0) {
             for (int hole = 1; hole <= holes; hole++) {
-                board.addSeeds(Side.NORTH, hole, rounds);
-                board.addSeeds(Side.SOUTH, hole, rounds);
+                board.addSeeds(NORTH, hole, rounds);
+                board.addSeeds(SOUTH, hole, rounds);
             }
             board.addSeedsToStore(move.getSide(), rounds);
         }
@@ -196,42 +163,29 @@ public class Kalah {
             return move.getSide().opposite();
     }
 
-    /**
-     * Checks whether all holes on a given side are empty.
-     *
-     * @param board The board to check.
-     * @param side  The side to check.
-     * @return "true" iff all holes on side "side" are empty.
-     */
-    protected static boolean holesEmpty(Board board, Side side) {
+    private boolean holesEmpty(Board board, Side side) {
         for (int hole = 1; hole <= board.getNoOfHoles(); hole++)
             if (board.getSeeds(side, hole) != 0)
                 return false;
         return true;
     }
 
-    /**
-     * Checks whether the game is over (based on the board).
-     *
-     * @param board The board to check the game state for.
-     * @return "true" if the game is over, "false" otherwise.
-     */
-    public static boolean gameOver(Board board) {
-        // The game is over if one of the agents can't make another move.
+    private ArrayList<Move> getMoves(Side opposite) {
+        ArrayList<Move> possibleMoves = new ArrayList<>();
 
-        return holesEmpty(board, Side.NORTH) || holesEmpty(board, Side.SOUTH);
+        for (int i = 1; i <= this.board.getNoOfHoles(); i++) {
+            Move move = new Move(opposite, i);
+            if (isLegalMove(move)) {
+                possibleMoves.add(move);
+            }
+
+        }
+
+        if (this.swappable && opposite == NORTH) { // can swap
+            possibleMoves.add(createNewSwapMove());
+        }
+
+        return possibleMoves;
     }
-
-	public static ArrayList<Move> getPossibleMovesForPlayer(Board board, Side side){
-		ArrayList<Move> possibleMoves = new ArrayList<Move>();
-		for (int i = 1; i <= board.getNoOfHoles(); i++){
-			Move move = new Move(side, i);
-			if (isLegalMove(board, move)) {
-				possibleMoves.add(move);
-			}
-
-		}
-		return possibleMoves;
-	}
 }
 
