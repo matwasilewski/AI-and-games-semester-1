@@ -6,4 +6,8 @@ unjar/*
 
 out/*
 out/
+<<<<<<< HEAD
 target/*
+=======
+/minimaxBot.iml
+>>>>>>> feature/main-method

@@ -1,3 +1,10 @@
+### Running
+
+Run after compiling into JAR:
+
+`java -jar resources/ManKalah.jar "java -jar resources/MKRefAgent.jar" "java -jar target/minimaxBot-1.0.1.jar"`
+
+
 # AI-and-games-semester-1
 
 **Schedule**
