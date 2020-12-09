@@ -12,9 +12,11 @@ import static com.MKAgent.Side.SOUTH;
 
 public class MKAgent {
     private Protocol protocol;
+    private Kalah currentGame;
 
-    public MKAgent(Protocol protocol) {
+    public MKAgent(Kalah currentGame, Protocol protocol) {
         this.protocol = protocol;
+        this.currentGame = currentGame;
     }
 
     public String recordStartMessageAndPrepareResponseMessage(String message) throws InvalidMessageException {
@@ -31,14 +33,14 @@ public class MKAgent {
     }
 
     public String recordStateMessageAndPrepareResponseMessage(String message) throws InvalidMessageException {
-        MoveTurn moveTurn = protocol.interpretStateMsg(message, Kalah.getBoard());
+        MoveTurn moveTurn = protocol.interpretStateMsg(message, currentGame.getBoard());
 
         if (moveTurn.end) {
             // Game is over
             return "Game is already over!";
         } else if (moveTurn.move == -1) {
             // Opponent swapped
-            Kalah.makeMove(createNewSwapMove());
+            currentGame.makeMove(createNewSwapMove());
             return performBestMove();
         } else if (moveTurn.again) {
             // Agent's turn
@@ -51,8 +53,7 @@ public class MKAgent {
 
     private String performBestMove() {
         Move bestMove = Minimax.getBestMoveForAgent();
-
-        Kalah.makeMove(bestMove);
+        currentGame.makeMove(bestMove);
 
         if(bestMove.isSwap()){
             return protocol.createSwapMsg();
