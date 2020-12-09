@@ -51,7 +51,7 @@ public class MinimaxUnitTest {
         mockedPossibleMoves.when(() -> { PossibleMoves.getPossibleMovesForPlayer(any(Board.class), any(Side.class)); })
                 .thenReturn(all_possbile_moves_for_first_mode);
 
-        int move_to_make = Minimax.getMove(board);
+        int move_to_make = Minimax.getBestMoveForAgent(board);
 
         assertEquals(1, move_to_make);
     }
@@ -78,7 +78,7 @@ public class MinimaxUnitTest {
                 .thenReturn(0).thenReturn(10);
 
         Minimax.maxDepth = 1;
-        int move_to_make = Minimax.getMove(board);
+        int move_to_make = Minimax.getBestMoveForAgent(board);
 
         assertEquals(1, move_to_make);
     }
@@ -102,7 +102,7 @@ public class MinimaxUnitTest {
         mockedPossibleMoves.when(() -> { PossibleMoves.getPossibleMovesForPlayer(any(Board.class), any(Side.class)); })
                 .thenReturn(all_possbile_moves_for_first_mode).thenReturn(new ArrayList<Move>());
 
-        int move_to_make = Minimax.getMove(board);
+        int move_to_make = Minimax.getBestMoveForAgent(board);
 
         assertEquals(6, move_to_make);
     }

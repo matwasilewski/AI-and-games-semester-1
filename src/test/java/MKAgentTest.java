@@ -2,9 +2,12 @@ import com.MKAgent.*;
 import com.MKAgent.Protocol.MoveTurn;
 import com.MKAgentMinMax.MKAgent;
 import com.MKAgentMinMax.Minimax;
+import com.MKAgentMinMax.PossibleMoves;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import static com.MKAgent.Move.createNewSwapMove;
 import static com.MKAgent.Side.SOUTH;
@@ -15,7 +18,7 @@ public class MKAgentTest {
 
     private MKAgent mkAgent;
 
-    private Kalah mockKalah;
+    private static MockedStatic<Kalah> mockKalah;
     private Minimax mockMinimax;
     private Protocol mockProtocol;
 
@@ -27,12 +30,13 @@ public class MKAgentTest {
 
     @BeforeEach
     private void setup() {
-        mockKalah = mock(Kalah.class);
+        mockKalah = Mockito.mockStatic(Kalah.class);
         mockMinimax = mock(Minimax.class);
         mockProtocol = mock(Protocol.class);
-        mkAgent = new MKAgent(mockKalah, mockMinimax, mockProtocol);
+        mkAgent = new MKAgent(mockMinimax, mockProtocol);
 
-        when(mockKalah.getBoard()).thenReturn(BOARD);
+        mockKalah.when(() -> { Kalah.getBoard(); })
+                .thenReturn(BOARD);
     }
 
     @Test

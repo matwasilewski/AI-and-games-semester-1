@@ -13,7 +13,7 @@ import static com.MKAgent.Side.SOUTH;
 public class MKAgent {
     private Protocol protocol;
 
-    public MKAgent(Kalah currentGame, Minimax minimax, Protocol protocol) {
+    public MKAgent(Protocol protocol) {
         this.protocol = protocol;
     }
 
