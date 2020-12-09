@@ -170,6 +170,17 @@ public class Kalah implements Cloneable {
     }
 
     /**
+     * Checks whether the game is over (based on the board).
+     * @param board The board to check the game state for.
+     * @return "true" if the game is over, "false" otherwise.
+     */
+    public static boolean gameOver (Board board)
+    {
+        // The game is over if one of the agents can't make another move.
+
+        return holesEmpty(board, Side.NORTH) || holesEmpty(board, Side.SOUTH);
+    }
+    /**
      * Gets score different
      * @param board The board to check the game state for.
      * @return result > 0 when North is winning, result < 0 when South is winning
