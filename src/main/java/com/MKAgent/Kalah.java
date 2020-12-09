@@ -6,13 +6,12 @@ import static com.MKAgent.Move.createNewSwapMove;
 import static com.MKAgent.Side.NORTH;
 import static com.MKAgent.Side.SOUTH;
 
-public class Kalah implements Cloneable {
+public class Kalah {
+    private static Board board;
 
-    private final Board board;
+    private static Side agentsSide = SOUTH;
 
-    private Side agentsSide = SOUTH;
-
-    private boolean swappable = true;
+    private static boolean swappable = true;
 
 
     public Kalah(Board board) throws NullPointerException {
@@ -21,29 +20,20 @@ public class Kalah implements Cloneable {
         this.board = board;
     }
 
-
-    public Kalah clone() throws CloneNotSupportedException {
-        Kalah cloneGameState = new Kalah(this.getBoard().clone());
-        cloneGameState.agentsSide = this.agentsSide;
-        cloneGameState.swappable = this.swappable;
-        return cloneGameState;
+    public static void setAgentsSide(Side agentsSide) {
+        Kalah.agentsSide = agentsSide;
     }
 
-    public void setAgentsSide(Side agentsSide) {
-        this.agentsSide = agentsSide;
-    }
-
-    public Board getBoard() {
+    public static Board getBoard() {
         return board;
     }
 
-    public Side makeMove(Move move) {
+    public static Side makeMove(Move move) {
         if(move.isSwap()) {
-            this.swappable = !this.swappable;
-            this.agentsSide = this.agentsSide.opposite();
-            return this.agentsSide.opposite();
+            Kalah.swappable = !Kalah.swappable;
+            Kalah.agentsSide = Kalah.agentsSide.opposite();
+            return Kalah.agentsSide.opposite();
         } else {
-
             return makeMove(board, move);
         }
     }
@@ -62,7 +52,7 @@ public class Kalah implements Cloneable {
         return getMoves(this.agentsSide.opposite());
     }
 
-    private Side makeMove(Board board, Move move) {
+    public static Side makeMove(Board board, Move move) {
 		/* from the documentation:
 		  "1. The counters are lifted from this hole and sown in anti-clockwise direction, starting
 		      with the next hole. The player's own kalahah is included in the sowing, but the

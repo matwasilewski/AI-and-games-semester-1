@@ -8,6 +8,17 @@ public class Minimax {
     public static int maxDepth = 10;
     public static Side playerSide = Side.NORTH;
 
+    public static void startGame(){
+        // build the tree
+    }
+
+    public static Move getBestMoveForAgent(){
+        // get best move from current root
+        // expend the tree one level deeper
+        return new Move(Side.NORTH, 1);
+//        return dfs(board, playerSide,0).getMove().getHole();
+    }
+
     public static int getBestMoveForAgent(Board board){
         return dfs(board, playerSide,0).getMove().getHole();
     }
@@ -21,9 +32,6 @@ public class Minimax {
             return new MinimaxMove(Kalah.getScoreDifference(board));
         }
 
-    }
-
-    private static int dfs(Board board, int currentDepth) {
         // get all the nodes
         ArrayList<Move> possibleMoves = PossibleMoves.getPossibleMovesForPlayer(board, currentSide);
 
