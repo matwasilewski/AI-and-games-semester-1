@@ -7,7 +7,7 @@ import static com.MKAgent.Side.NORTH;
 import static com.MKAgent.Side.SOUTH;
 
 public class Kalah {
-    private static Board board;
+    private Board board;
 
     private static Side agentsSide = SOUTH;
 
@@ -24,7 +24,7 @@ public class Kalah {
         Kalah.agentsSide = agentsSide;
     }
 
-    public static Board getBoard() {
+    public Board getBoard() {
         return board;
     }
 
