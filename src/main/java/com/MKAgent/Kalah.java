@@ -162,7 +162,7 @@ public class Kalah implements Cloneable {
             return move.getSide().opposite();
     }
 
-    private boolean holesEmpty(Board board, Side side) {
+    private static boolean holesEmpty(Board board, Side side) {
         for (int hole = 1; hole <= board.getNoOfHoles(); hole++)
             if (board.getSeeds(side, hole) != 0)
                 return false;
@@ -193,11 +193,6 @@ public class Kalah implements Cloneable {
     private ArrayList<Move> getMoves(Side opposite) {
         ArrayList<Move> possibleMoves = new ArrayList<>();
 
-<<<<<<< HEAD
-    	return holesEmpty(board, Side.NORTH) || holesEmpty(board, Side.SOUTH);
-    }
-
-=======
         for (int i = 1; i <= this.board.getNoOfHoles(); i++) {
             Move move = new Move(opposite, i);
             if (isLegalMove(move)) {
@@ -212,6 +207,5 @@ public class Kalah implements Cloneable {
 
         return possibleMoves;
     }
->>>>>>> feature/main-method
 }
 

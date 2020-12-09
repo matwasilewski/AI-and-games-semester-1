@@ -11,15 +11,10 @@ import static com.MKAgent.Side.NORTH;
 import static com.MKAgent.Side.SOUTH;
 
 public class MKAgent {
-
-    private Kalah currentGame;
-
     private Minimax minimax;
-
     private Protocol protocol;
 
     public MKAgent(Kalah currentGame, Minimax minimax, Protocol protocol) {
-        this.currentGame = currentGame;
         this.minimax = minimax;
         this.protocol = protocol;
     }
@@ -29,10 +24,10 @@ public class MKAgent {
         boolean isAgentStartingFirst = protocol.interpretStartMsg(message);
 
         if (isAgentStartingFirst) {
-            currentGame.setAgentsSide(SOUTH);
+            Kalah.setAgentsSide(SOUTH);
             return performBestMove();
         } else {
-            currentGame.setAgentsSide(NORTH);
+            Kalah.setAgentsSide(NORTH);
             return "";
         }
     }
@@ -61,7 +56,7 @@ public class MKAgent {
     }
 
     private String performBestMove() {
-        Move bestMove = minimax.getBestMoveForAgent(this.currentGame);
+        Move bestMove = minimax.getBestMoveForAgent();
 
         this.currentGame.makeMove(bestMove);
 
