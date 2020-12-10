@@ -17,6 +17,7 @@ public class PossibleMoves {
      * @return ArrayList of all the possible moves
      */
     public static ArrayList<Move> getMoves(Board board, Side side){
+        // I have moved this here for it to be in better place for testing
         ArrayList<Move> possibleMoves = new ArrayList<>();
 
         for (int i = 1; i <= board.getNoOfHoles(); i++) {

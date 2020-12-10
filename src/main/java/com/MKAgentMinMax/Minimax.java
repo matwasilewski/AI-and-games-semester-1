@@ -5,7 +5,7 @@ import com.MKAgent.*;
 import java.util.ArrayList;
 
 public class Minimax {
-    public static int maxDepth = 8;
+    public static int maxDepth = 10;
 
     public Minimax(){
         // initialize game Tree?
