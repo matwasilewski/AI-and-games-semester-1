@@ -30,7 +30,7 @@ public class MKAgentTest {
         mockKalah = mock(Kalah.class);
         mockMinimax = mock(Minimax.class);
         mockProtocol = mock(Protocol.class);
-        mkAgent = new MKAgent(mockKalah, mockProtocol);
+        mkAgent = new MKAgent(mockKalah, mockMinimax, mockProtocol);
 
         when(mockKalah.getBoard()).thenReturn(BOARD);
     }
@@ -39,7 +39,7 @@ public class MKAgentTest {
     void whenStartingAndIsFirstPlayer_shouldRecordSouthSide_andMakeMove() throws InvalidMessageException {
         // Given
         when(mockProtocol.interpretStartMsg(MESSAGE)).thenReturn(true);
-        when(mockMinimax.getBestMoveForAgent()).thenReturn(MOVE);
+        when(mockMinimax.getBestMoveForAgent(any(Board.class))).thenReturn(MOVE);
 
         // When
         mkAgent.recordStartMessageAndPrepareResponseMessage(MESSAGE);
@@ -68,7 +68,7 @@ public class MKAgentTest {
     void whenOpponentMovesAndAgentsTurn_shouldRecordChangeInBoardAndRecordAgentsMove() throws InvalidMessageException {
         // Given
         when(mockProtocol.interpretStateMsg(MESSAGE, BOARD)).thenReturn(agentsTurnMoveTurn());
-        when(mockMinimax.getBestMoveForAgent()).thenReturn(MOVE);
+        when(mockMinimax.getBestMoveForAgent(any(Board.class))).thenReturn(MOVE);
 
         // When
         mkAgent.recordStateMessageAndPrepareResponseMessage(MESSAGE);
@@ -77,11 +77,13 @@ public class MKAgentTest {
         verify(mockKalah).makeMove(MOVE);
     }
 
+
+
     @Test
     void whenOpponentSwapsAndAgentsTurn_shouldRecordSwapAndRecordAgentsMove() throws InvalidMessageException {
         // Given
         when(mockProtocol.interpretStateMsg(MESSAGE, BOARD)).thenReturn(opponentSwappedMoveTurn());
-        when(mockMinimax.getBestMoveForAgent()).thenReturn(MOVE);
+        when(mockMinimax.getBestMoveForAgent(any(Board.class))).thenReturn(MOVE);
 
         // When
         mkAgent.recordStateMessageAndPrepareResponseMessage(MESSAGE);
@@ -110,7 +112,7 @@ public class MKAgentTest {
     void whenAgentsTurn_shouldSwapIfBestMove() throws InvalidMessageException {
         // Given
         when(mockProtocol.interpretStateMsg(MESSAGE, BOARD)).thenReturn(agentsTurnMoveTurn());
-        when(mockMinimax.getBestMoveForAgent()).thenReturn(SWAP_MOVE);
+        when(mockMinimax.getBestMoveForAgent(any(Board.class))).thenReturn(SWAP_MOVE);
 
         // When
         mkAgent.recordStateMessageAndPrepareResponseMessage(MESSAGE);

@@ -12,11 +12,11 @@ public class Minimax {
         // initialize game Tree?
     }
 
-    public int getBestMoveForAgent(Board board){
-        return dfs(board, playerSide,0).getMove().getHole();
+    public Move getBestMoveForAgent(Board board){
+        return dfs(board, playerSide,0).getMove();
     }
 
-    public  MinimaxMove dfs(Board board, Side currentSide, int currentDepth){
+    public MinimaxMove dfs(Board board, Side currentSide, int currentDepth){
         if(currentDepth == maxDepth){
             return new MinimaxMove(Heuristic.getScore(board, playerSide));
         }

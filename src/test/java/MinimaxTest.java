@@ -20,6 +20,7 @@ public class MinimaxTest {
     private static MockedStatic<PossibleMoves> mockedPossibleMoves;
     private static MockedStatic<Heuristic> mockedHeuristic;
     private int numberOfHoles = 7;
+    private Minimax minimax = new Minimax();
 
     @BeforeAll
     public static void init() {
@@ -51,9 +52,9 @@ public class MinimaxTest {
         mockedPossibleMoves.when(() -> { PossibleMoves.getMoves(any(Board.class), any(Side.class)); })
                 .thenReturn(all_possbile_moves_for_first_mode);
 
-        int move_to_make = Minimax.getBestMoveForAgent(board);
+        Move move_to_make = minimax.getBestMoveForAgent(board);
 
-        assertEquals(1, move_to_make);
+        assertEquals(1, move_to_make.getHole());
     }
 
     @Test
@@ -78,7 +79,7 @@ public class MinimaxTest {
                 .thenReturn(0).thenReturn(10);
 
         Minimax.maxDepth = 1;
-        int move_to_make = Minimax.getBestMoveForAgent(board);
+        Move move_to_make = minimax.getBestMoveForAgent(board);
 
         assertEquals(1, move_to_make);
     }
@@ -102,7 +103,7 @@ public class MinimaxTest {
         mockedPossibleMoves.when(() -> { PossibleMoves.getMoves(any(Board.class), any(Side.class)); })
                 .thenReturn(all_possbile_moves_for_first_mode).thenReturn(new ArrayList<Move>());
 
-        int move_to_make = Minimax.getBestMoveForAgent(board);
+        Move move_to_make = minimax.getBestMoveForAgent(board);
 
         assertEquals(6, move_to_make);
     }

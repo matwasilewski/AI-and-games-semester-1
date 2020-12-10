@@ -58,7 +58,7 @@ public class Main {
     public static void main(String[] args) {
         String message;
 
-        MKAgent mkAgent = new MKAgent(new Kalah(new Board(7, 7)), new Protocol());
+        MKAgent mkAgent = new MKAgent(new Kalah(new Board(7, 7)), new Minimax(), new Protocol());
 
         try {
             while (true) {

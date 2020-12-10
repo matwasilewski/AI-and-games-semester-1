@@ -11,12 +11,17 @@ import static com.MKAgent.Side.NORTH;
 import static com.MKAgent.Side.SOUTH;
 
 public class MKAgent {
-    private Protocol protocol;
+
     private Kalah currentGame;
 
-    public MKAgent(Kalah currentGame, Protocol protocol) {
-        this.protocol = protocol;
+    private Minimax minimax;
+
+    private Protocol protocol;
+
+    public MKAgent(Kalah currentGame, Minimax minimax, Protocol protocol) {
         this.currentGame = currentGame;
+        this.minimax = minimax;
+        this.protocol = protocol;
     }
 
     public String recordStartMessageAndPrepareResponseMessage(String message) throws InvalidMessageException {
@@ -33,6 +38,7 @@ public class MKAgent {
     }
 
     public String recordStateMessageAndPrepareResponseMessage(String message) throws InvalidMessageException {
+
         MoveTurn moveTurn = protocol.interpretStateMsg(message, currentGame.getBoard());
 
         if (moveTurn.end) {
@@ -41,10 +47,13 @@ public class MKAgent {
         } else if (moveTurn.move == -1) {
             // Opponent swapped
             currentGame.makeMove(createNewSwapMove());
+
             return performBestMove();
         } else if (moveTurn.again) {
+
             // Agent's turn
             return performBestMove();
+
         } else {
             // Opponent's turn again
             return "";
@@ -52,8 +61,9 @@ public class MKAgent {
     }
 
     private String performBestMove() {
-        Move bestMove = Minimax.getBestMoveForAgent();
-        currentGame.makeMove(bestMove);
+        Move bestMove = minimax.getBestMoveForAgent(this.currentGame.getBoard());
+
+        this.currentGame.makeMove(bestMove);
 
         if(bestMove.isSwap()){
             return protocol.createSwapMsg();
@@ -61,4 +71,9 @@ public class MKAgent {
             return protocol.createMoveMsg(bestMove.getHole());
         }
     }
+
+    public Kalah getCurrentGame() {
+        return currentGame;
+    }
+
 }

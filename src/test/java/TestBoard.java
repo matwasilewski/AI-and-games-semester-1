@@ -18,7 +18,7 @@ public class TestBoard {
 
         Board board = new Board(6, 4);
 
-        ArrayList<Move> output = PossibleMoves.getPossibleMovesForPlayer(board, Side.SOUTH);
+        ArrayList<Move> output = PossibleMoves.getMoves(board, Side.SOUTH);
 
         assertFalse(output.isEmpty());
 
@@ -35,7 +35,7 @@ public class TestBoard {
         for (int i = 1; i <= numOfHoles; i++)
             board.setSeeds(Side.SOUTH, i, 0);
 
-        ArrayList<Move> output = PossibleMoves.getPossibleMovesForPlayer(board, Side.SOUTH);
+        ArrayList<Move> output = PossibleMoves.getMoves(board, Side.SOUTH);
 
         assertTrue(output.isEmpty());
     }
@@ -52,7 +52,7 @@ public class TestBoard {
         board.setSeeds(Side.SOUTH, 5, 0);
         board.setSeeds(Side.SOUTH, 6, 0);
 
-        ArrayList<Move> output = PossibleMoves.getPossibleMovesForPlayer(board, Side.SOUTH);
+        ArrayList<Move> output = PossibleMoves.getMoves(board, Side.SOUTH);
 
         assertTrue(output.size() == 1);
 
