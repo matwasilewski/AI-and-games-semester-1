@@ -1,13 +1,9 @@
 unjar
 unjar/*
-
 .idea
 .idea/*
-
 out/*
 out/
-<<<<<<< HEAD
 target/*
-=======
 /minimaxBot.iml
->>>>>>> feature/main-method
+
