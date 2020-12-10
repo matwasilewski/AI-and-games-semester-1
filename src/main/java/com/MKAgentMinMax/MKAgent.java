@@ -47,13 +47,11 @@ public class MKAgent {
         } else if (moveTurn.move == -1) {
             // Opponent swapped
             currentGame.makeMove(createNewSwapMove());
-
             return performBestMove();
         } else if (moveTurn.again) {
 
             // Agent's turn
             return performBestMove();
-
         } else {
             // Opponent's turn again
             return "";

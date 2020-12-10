@@ -13,7 +13,7 @@ public class Kalah {
      * The board to play on.
      */
     private final Board board;
-    private static Side agentsSide = SOUTH;
+    public static Side agentsSide = SOUTH;
     private static boolean swappable = true;
 
     /**
@@ -78,13 +78,13 @@ public class Kalah {
                 && (board.getSeeds(move.getSide(), move.getHole()) != 0);
     }
 
-    public void setAgentsSide(Side agentsSide) {
-        this.agentsSide = agentsSide;
-    }
-
     public boolean gameOver ()
     {
         return gameOver(this.board);
+    }
+
+    public void setAgentsSide(Side side){
+        Kalah.agentsSide = side;
     }
 
     public static Side makeMove(Board board, Move move) {
@@ -106,10 +106,10 @@ public class Kalah {
 		    	collects the most counters is the winner."
 		*/
 
+        // TODO Not working properly
         if(move.isSwap()) {
-            Kalah.swappable = !Kalah.swappable;
-            Kalah.agentsSide = Kalah.agentsSide.opposite();
-            return Kalah.agentsSide.opposite();
+            board.swap();
+            return move.getSide().opposite();
         }
 
         // pick seeds:
@@ -187,6 +187,7 @@ public class Kalah {
         board.notifyObservers(move);
 
         // who's turn is it?
+        // TODO I think this is not implemented - At the start of the game, South goes first. South has only one turn, even if it ends in the last seed deposited into South's scoring well.
         if (sowHole == 0)  // the store (implies (sowSide == move.getSide()))
             return move.getSide();  // move again
         else

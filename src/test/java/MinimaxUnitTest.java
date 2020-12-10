@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MinimaxTest {
+public class MinimaxUnitTest {
     private static MockedStatic<PossibleMoves> mockedPossibleMoves;
     private static MockedStatic<Heuristic> mockedHeuristic;
     private int numberOfHoles = 7;

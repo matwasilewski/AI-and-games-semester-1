@@ -5,20 +5,19 @@ import com.MKAgent.*;
 import java.util.ArrayList;
 
 public class Minimax {
-    public static int maxDepth = 10;
-    public static Side playerSide = Side.NORTH;
+    public static int maxDepth = 8;
 
     public Minimax(){
         // initialize game Tree?
     }
 
     public Move getBestMoveForAgent(Board board){
-        return dfs(board, playerSide,0).getMove();
+        return dfs(board, Kalah.agentsSide,0).getMove();
     }
 
     public MinimaxMove dfs(Board board, Side currentSide, int currentDepth){
         if(currentDepth == maxDepth){
-            return new MinimaxMove(Heuristic.getScore(board, playerSide));
+            return new MinimaxMove(Heuristic.getScore(board, currentSide));
         }
 
         if(Kalah.gameOver(board)){
@@ -35,7 +34,7 @@ public class Minimax {
 
         int current_score;
         boolean maxPlayer;
-        if(currentSide == playerSide){
+        if(currentSide == Kalah.agentsSide){
             current_score = Integer.MIN_VALUE;
             maxPlayer = true;
         }else{

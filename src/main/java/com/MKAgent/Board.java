@@ -84,10 +84,9 @@ public class Board extends Observable implements Cloneable
     }
 
 	/**
-	 * Creates a new board.
+	 * Creates a new board from a template
 	 *
 	 * @param holes The number of holes per side (must be >= 1).
-	 * @param seeds The initial number of seeds per hole (must be >= 0). The
 	 *        stores are empty initially.
 	 * @throws IllegalArgumentException if any of the arguments is outside of
 	 *         the valid range.
@@ -99,6 +98,16 @@ public class Board extends Observable implements Cloneable
 
 		this.holes = holes;
 		board = template_board;
+	}
+
+	/**
+	 * Swaps the board.
+	 */
+	public void swap ()
+	{
+		int[] temp = board[NORTH_ROW];
+		board[NORTH_ROW] = board[SOUTH_ROW];
+		board[SOUTH_ROW] = temp;
 	}
     
 	/**
