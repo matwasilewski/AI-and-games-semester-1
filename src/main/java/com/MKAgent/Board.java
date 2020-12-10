@@ -29,6 +29,11 @@ public class Board extends Observable implements Cloneable
 	private final int holes;
 
 	/**
+	 * The number of holes per side (must be >= 1).
+	 */
+	public boolean swapable = false;
+
+	/**
 	 * The board data. The first dimension of the array is 2, the second one
 	 * is the number of holes per side plus one. The data for the North side
 	 * is stored in board[NORTH_ROW][*], the data for the South side in

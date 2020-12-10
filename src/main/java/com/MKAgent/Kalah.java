@@ -1,5 +1,7 @@
 package com.MKAgent;
 
+import com.MKAgentMinMax.PossibleMoves;
+
 import java.util.ArrayList;
 
 import static com.MKAgent.Move.createNewSwapMove;
@@ -224,22 +226,8 @@ public class Kalah {
         return board.getSeedsInStore(Side.NORTH) - board.getSeedsInStore(Side.SOUTH);
     }
 
-    public static ArrayList<Move> getMoves(Board board, Side opposite) {
-        ArrayList<Move> possibleMoves = new ArrayList<>();
-
-        for (int i = 1; i <= board.getNoOfHoles(); i++) {
-            Move move = new Move(opposite, i);
-            if (Kalah.isLegalMove(move, board)) {
-                possibleMoves.add(move);
-            }
-
-        }
-
-//        if (game.SouthMoveCount == 1) { // can swap
-//            possibleMoves.add(createNewSwapMove());
-//        }
-
-        return possibleMoves;
+    public static ArrayList<Move> getMoves(Board board, Side side) {
+        return PossibleMoves.getMoves(board, side);
     }
 }
 
