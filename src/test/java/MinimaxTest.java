@@ -48,7 +48,7 @@ public class MinimaxUnitTest {
         ArrayList<Move> all_possbile_moves_for_first_mode = new ArrayList<>();
         all_possbile_moves_for_first_mode.add(new Move(Side.NORTH, 1));
 
-        mockedPossibleMoves.when(() -> { PossibleMoves.getPossibleMovesForPlayer(any(Board.class), any(Side.class)); })
+        mockedPossibleMoves.when(() -> { PossibleMoves.getMoves(any(Board.class), any(Side.class)); })
                 .thenReturn(all_possbile_moves_for_first_mode);
 
         int move_to_make = Minimax.getBestMoveForAgent(board);
@@ -71,7 +71,7 @@ public class MinimaxUnitTest {
         ArrayList<Move> all_possbile_moves_for_first_mode = new ArrayList<>();
         all_possbile_moves_for_first_mode.add(new Move(Side.NORTH, 1));
 
-        mockedPossibleMoves.when(() -> { PossibleMoves.getPossibleMovesForPlayer(any(Board.class), any(Side.class)); })
+        mockedPossibleMoves.when(() -> { PossibleMoves.getMoves(any(Board.class), any(Side.class)); })
                 .thenReturn(all_possbile_moves_for_first_mode);
 
         mockedHeuristic.when(() -> { Heuristic.getScore(any(Board.class), any(Side.class)); })
@@ -99,7 +99,7 @@ public class MinimaxUnitTest {
         all_possbile_moves_for_first_mode.add(new Move(Side.NORTH, 5));
         all_possbile_moves_for_first_mode.add(new Move(Side.NORTH, 6));
 
-        mockedPossibleMoves.when(() -> { PossibleMoves.getPossibleMovesForPlayer(any(Board.class), any(Side.class)); })
+        mockedPossibleMoves.when(() -> { PossibleMoves.getMoves(any(Board.class), any(Side.class)); })
                 .thenReturn(all_possbile_moves_for_first_mode).thenReturn(new ArrayList<Move>());
 
         int move_to_make = Minimax.getBestMoveForAgent(board);
