@@ -12,11 +12,10 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 
-import static org.mockito.Mockito.*;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.any;
 
-public class MinimaxTest {
+public class MinimaxIntegrationTest {
     private static MockedStatic<PossibleMoves> mockedPossibleMoves;
     private static MockedStatic<Heuristic> mockedHeuristic;
     private int numberOfHoles = 7;
