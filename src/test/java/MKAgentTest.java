@@ -2,12 +2,9 @@ import com.MKAgent.*;
 import com.MKAgent.Protocol.MoveTurn;
 import com.MKAgentMinMax.MKAgent;
 import com.MKAgentMinMax.Minimax;
-import com.MKAgentMinMax.PossibleMoves;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 
 import static com.MKAgent.Move.createNewSwapMove;
 import static com.MKAgent.Side.SOUTH;
@@ -18,7 +15,7 @@ public class MKAgentTest {
 
     private MKAgent mkAgent;
 
-    private static MockedStatic<Kalah> mockKalah;
+    private Kalah mockKalah;
     private Minimax mockMinimax;
     private Protocol mockProtocol;
 
@@ -30,20 +27,19 @@ public class MKAgentTest {
 
     @BeforeEach
     private void setup() {
-        mockKalah = Mockito.mockStatic(Kalah.class);
+        mockKalah = mock(Kalah.class);
         mockMinimax = mock(Minimax.class);
         mockProtocol = mock(Protocol.class);
-        mkAgent = new MKAgent(mockMinimax, mockProtocol);
+        mkAgent = new MKAgent(mockKalah, mockProtocol);
 
-        mockKalah.when(() -> { Kalah.getBoard(); })
-                .thenReturn(BOARD);
+        when(mockKalah.getBoard()).thenReturn(BOARD);
     }
 
     @Test
     void whenStartingAndIsFirstPlayer_shouldRecordSouthSide_andMakeMove() throws InvalidMessageException {
         // Given
         when(mockProtocol.interpretStartMsg(MESSAGE)).thenReturn(true);
-        when(mockMinimax.getBestMoveForAgent(mockKalah)).thenReturn(MOVE);
+        when(mockMinimax.getBestMoveForAgent()).thenReturn(MOVE);
 
         // When
         mkAgent.recordStartMessageAndPrepareResponseMessage(MESSAGE);
@@ -72,7 +68,7 @@ public class MKAgentTest {
     void whenOpponentMovesAndAgentsTurn_shouldRecordChangeInBoardAndRecordAgentsMove() throws InvalidMessageException {
         // Given
         when(mockProtocol.interpretStateMsg(MESSAGE, BOARD)).thenReturn(agentsTurnMoveTurn());
-        when(mockMinimax.getBestMoveForAgent(mockKalah)).thenReturn(MOVE);
+        when(mockMinimax.getBestMoveForAgent()).thenReturn(MOVE);
 
         // When
         mkAgent.recordStateMessageAndPrepareResponseMessage(MESSAGE);
@@ -81,13 +77,11 @@ public class MKAgentTest {
         verify(mockKalah).makeMove(MOVE);
     }
 
-
-
     @Test
     void whenOpponentSwapsAndAgentsTurn_shouldRecordSwapAndRecordAgentsMove() throws InvalidMessageException {
         // Given
         when(mockProtocol.interpretStateMsg(MESSAGE, BOARD)).thenReturn(opponentSwappedMoveTurn());
-        when(mockMinimax.getBestMoveForAgent(mockKalah)).thenReturn(MOVE);
+        when(mockMinimax.getBestMoveForAgent()).thenReturn(MOVE);
 
         // When
         mkAgent.recordStateMessageAndPrepareResponseMessage(MESSAGE);
@@ -116,7 +110,7 @@ public class MKAgentTest {
     void whenAgentsTurn_shouldSwapIfBestMove() throws InvalidMessageException {
         // Given
         when(mockProtocol.interpretStateMsg(MESSAGE, BOARD)).thenReturn(agentsTurnMoveTurn());
-        when(mockMinimax.getBestMoveForAgent(mockKalah)).thenReturn(SWAP_MOVE);
+        when(mockMinimax.getBestMoveForAgent()).thenReturn(SWAP_MOVE);
 
         // When
         mkAgent.recordStateMessageAndPrepareResponseMessage(MESSAGE);

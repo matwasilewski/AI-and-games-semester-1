@@ -24,10 +24,10 @@ public class MKAgent {
         boolean isAgentStartingFirst = protocol.interpretStartMsg(message);
 
         if (isAgentStartingFirst) {
-            Kalah.setAgentsSide(SOUTH);
+            currentGame.setAgentsSide(SOUTH);
             return performBestMove();
         } else {
-            Kalah.setAgentsSide(NORTH);
+            currentGame.setAgentsSide(NORTH);
             return "";
         }
     }

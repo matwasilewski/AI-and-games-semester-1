@@ -56,21 +56,33 @@ public class Kalah {
      * @return true if the move is legal, false if not.
      */
     public boolean isLegalMove(Move move) {
-        // check if the hole is existent and non-empty:
-        return (move.getHole() <= this.board.getNoOfHoles())
-                && (this.board.getSeeds(move.getSide(), move.getHole()) != 0);
+        return isLegalMove(move, board);
     }
 
-//    public ArrayList<Move> getPossibleMovesForAgent() {
-//        return getMoves(this.agentsSide);
-//    }
-//
-//    public ArrayList<Move> getPossibleMovesForOpponent() {
-//        return getMoves(this.agentsSide.opposite());
-//    }
+    public ArrayList<Move> getMoves(){
+        return getMoves(board, agentsSide);
+    }
 
-    public static void setAgentsSide(Side agentsSide) {
-        Kalah.agentsSide = agentsSide;
+    /**
+     * Checks whether a given move is legal on the underlying board. The move
+     * is not actually made.
+     * @param move The move to check.
+     * @param board The board to check.
+     * @return true if the move is legal, false if not.
+     */
+    public static boolean isLegalMove(Move move, Board board) {
+        // check if the hole is existent and non-empty:
+        return (move.getHole() <= board.getNoOfHoles())
+                && (board.getSeeds(move.getSide(), move.getHole()) != 0);
+    }
+
+    public void setAgentsSide(Side agentsSide) {
+        this.agentsSide = agentsSide;
+    }
+
+    public boolean gameOver ()
+    {
+        return gameOver(this.board);
     }
 
     public static Side makeMove(Board board, Move move) {
@@ -200,7 +212,6 @@ public class Kalah {
     public static boolean gameOver (Board board)
     {
         // The game is over if one of the agents can't make another move.
-
         return holesEmpty(board, Side.NORTH) || holesEmpty(board, Side.SOUTH);
     }
     /**
@@ -213,20 +224,20 @@ public class Kalah {
         return board.getSeedsInStore(Side.NORTH) - board.getSeedsInStore(Side.SOUTH);
     }
 
-    private ArrayList<Move> getMoves(Side opposite) {
+    public static ArrayList<Move> getMoves(Board board, Side opposite) {
         ArrayList<Move> possibleMoves = new ArrayList<>();
 
-        for (int i = 1; i <= this.board.getNoOfHoles(); i++) {
+        for (int i = 1; i <= board.getNoOfHoles(); i++) {
             Move move = new Move(opposite, i);
-            if (isLegalMove(move)) {
+            if (Kalah.isLegalMove(move, board)) {
                 possibleMoves.add(move);
             }
 
         }
 
-        if (this.swappable && opposite == NORTH) { // can swap
-            possibleMoves.add(createNewSwapMove());
-        }
+//        if (game.SouthMoveCount == 1) { // can swap
+//            possibleMoves.add(createNewSwapMove());
+//        }
 
         return possibleMoves;
     }
