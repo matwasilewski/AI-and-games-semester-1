@@ -2,7 +2,7 @@ package com.MKAgentMinMax;
 
 import com.MKAgent.Board;
 import com.MKAgent.InvalidMessageException;
-import com.MKAgent.Kalah;
+import com.MKAgent.KalahState;
 import com.MKAgent.Protocol;
 
 import java.io.*;
@@ -58,7 +58,7 @@ public class Main {
     public static void main(String[] args) {
         String message;
 
-        MKAgent mkAgent = new MKAgent(new Kalah(new Board(7, 7)), new Minimax(), new Protocol());
+        MKAgent mkAgent = new MKAgent(new KalahState(new Board(7, 7)), new Minimax(), new Protocol());
 
         try {
             while (true) {

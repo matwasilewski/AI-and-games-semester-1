@@ -15,7 +15,7 @@ public class MKAgentTest {
 
     private MKAgent mkAgent;
 
-    private Kalah mockKalah;
+    private KalahState mockKalahState;
     private Minimax mockMinimax;
     private Protocol mockProtocol;
 
@@ -27,26 +27,26 @@ public class MKAgentTest {
 
     @BeforeEach
     private void setup() {
-        mockKalah = mock(Kalah.class);
+        mockKalahState = mock(KalahState.class);
         mockMinimax = mock(Minimax.class);
         mockProtocol = mock(Protocol.class);
-        mkAgent = new MKAgent(mockKalah, mockMinimax, mockProtocol);
+        mkAgent = new MKAgent(mockKalahState, mockMinimax, mockProtocol);
 
-        when(mockKalah.getBoard()).thenReturn(BOARD);
+        when(mockKalahState.getBoard()).thenReturn(BOARD);
     }
 
     @Test
-    void whenStartingAndIsFirstPlayer_shouldRecordSouthSide_andMakeMove() throws InvalidMessageException {
+    void whenStartingAndIsFirstPlayer_shouldRecordSouthSide_andMakeMove() throws InvalidMessageException, CloneNotSupportedException {
         // Given
         when(mockProtocol.interpretStartMsg(MESSAGE)).thenReturn(true);
-        when(mockMinimax.getBestMoveForAgent(any(Board.class))).thenReturn(MOVE);
+        when(mockMinimax.getBestMoveForAgent(any(KalahState.class))).thenReturn(MOVE);
 
         // When
         mkAgent.recordStartMessageAndPrepareResponseMessage(MESSAGE);
 
         // Then
-        verify(mockKalah).setAgentsSide(SOUTH);
-        verify(mockKalah).makeMove(MOVE);
+        verify(mockKalahState).setAgentsSide(SOUTH);
+        verify(mockKalahState).makeMove(MOVE);
     }
 
 
@@ -60,38 +60,38 @@ public class MKAgentTest {
         mkAgent.recordStartMessageAndPrepareResponseMessage(MESSAGE);
 
         // Then
-        verify(mockKalah, times(0)).makeMove(any());
+        verify(mockKalahState, times(0)).makeMove(any());
     }
 
 
     @Test
-    void whenOpponentMovesAndAgentsTurn_shouldRecordChangeInBoardAndRecordAgentsMove() throws InvalidMessageException {
+    void whenOpponentMovesAndAgentsTurn_shouldRecordChangeInBoardAndRecordAgentsMove() throws InvalidMessageException, CloneNotSupportedException {
         // Given
         when(mockProtocol.interpretStateMsg(MESSAGE, BOARD)).thenReturn(agentsTurnMoveTurn());
-        when(mockMinimax.getBestMoveForAgent(any(Board.class))).thenReturn(MOVE);
+        when(mockMinimax.getBestMoveForAgent(any(KalahState.class))).thenReturn(MOVE);
 
         // When
         mkAgent.recordStateMessageAndPrepareResponseMessage(MESSAGE);
 
         // Then
-        verify(mockKalah).makeMove(MOVE);
+        verify(mockKalahState).makeMove(MOVE);
     }
 
 
 
     @Test
-    void whenOpponentSwapsAndAgentsTurn_shouldRecordSwapAndRecordAgentsMove() throws InvalidMessageException {
+    void whenOpponentSwapsAndAgentsTurn_shouldRecordSwapAndRecordAgentsMove() throws InvalidMessageException, CloneNotSupportedException {
         // Given
         when(mockProtocol.interpretStateMsg(MESSAGE, BOARD)).thenReturn(opponentSwappedMoveTurn());
-        when(mockMinimax.getBestMoveForAgent(any(Board.class))).thenReturn(MOVE);
+        when(mockMinimax.getBestMoveForAgent(any(KalahState.class))).thenReturn(MOVE);
 
         // When
         mkAgent.recordStateMessageAndPrepareResponseMessage(MESSAGE);
 
         // Then
-        InOrder inOrder = inOrder(mockKalah);
-        inOrder.verify(mockKalah).makeMove(SWAP_MOVE);
-        inOrder.verify(mockKalah).makeMove(MOVE);
+        InOrder inOrder = inOrder(mockKalahState);
+        inOrder.verify(mockKalahState).makeMove(SWAP_MOVE);
+        inOrder.verify(mockKalahState).makeMove(MOVE);
         inOrder.verifyNoMoreInteractions();
     }
 
@@ -104,21 +104,21 @@ public class MKAgentTest {
         mkAgent.recordStateMessageAndPrepareResponseMessage(MESSAGE);
 
         // Then
-        verify(mockKalah, times(0)).makeMove(any());
+        verify(mockKalahState, times(0)).makeMove(any());
 
     }
 
     @Test
-    void whenAgentsTurn_shouldSwapIfBestMove() throws InvalidMessageException {
+    void whenAgentsTurn_shouldSwapIfBestMove() throws InvalidMessageException, CloneNotSupportedException {
         // Given
         when(mockProtocol.interpretStateMsg(MESSAGE, BOARD)).thenReturn(agentsTurnMoveTurn());
-        when(mockMinimax.getBestMoveForAgent(any(Board.class))).thenReturn(SWAP_MOVE);
+        when(mockMinimax.getBestMoveForAgent(any(KalahState.class))).thenReturn(SWAP_MOVE);
 
         // When
         mkAgent.recordStateMessageAndPrepareResponseMessage(MESSAGE);
 
         // Then
-        verify(mockKalah).makeMove(SWAP_MOVE);
+        verify(mockKalahState).makeMove(SWAP_MOVE);
     }
 
     private MoveTurn opponentSwappedMoveTurn() {

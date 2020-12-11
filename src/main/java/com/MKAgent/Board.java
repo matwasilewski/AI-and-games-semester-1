@@ -12,7 +12,7 @@ import java.util.Observable;
  * <BR>
  * Initially, there is the same number of "seeds" in each hole.
  */
-public class Board extends Observable implements Cloneable
+public class Board extends Observable
 {
 	/**
 	 * @see #board
@@ -27,11 +27,6 @@ public class Board extends Observable implements Cloneable
 	 * The number of holes per side (must be >= 1).
 	 */
 	private final int holes;
-
-	/**
-	 * The number of holes per side (must be >= 1).
-	 */
-	public boolean swapable = false;
 
 	/**
 	 * The board data. The first dimension of the array is 2, the second one
@@ -57,8 +52,9 @@ public class Board extends Observable implements Cloneable
     	}
     }
 
+
     /**
-     * Creates a new board from the template
+     * Creates a new board.
      * 
      * @param holes The number of holes per side (must be >= 1).
      * @param seeds The initial number of seeds per hole (must be >= 0). The
@@ -137,7 +133,7 @@ public class Board extends Observable implements Cloneable
      * @see #Board(Board)
      */
     @Override
-	public Board clone() throws CloneNotSupportedException
+	public Board clone()
 	{
     	return new Board(this);
 	}

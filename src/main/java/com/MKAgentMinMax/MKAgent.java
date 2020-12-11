@@ -1,7 +1,7 @@
 package com.MKAgentMinMax;
 
 import com.MKAgent.InvalidMessageException;
-import com.MKAgent.Kalah;
+import com.MKAgent.KalahState;
 import com.MKAgent.Move;
 import com.MKAgent.Protocol;
 
@@ -12,13 +12,13 @@ import static com.MKAgent.Side.SOUTH;
 
 public class MKAgent {
 
-    private Kalah currentGame;
+    private KalahState currentGame;
 
     private Minimax minimax;
 
     private Protocol protocol;
 
-    public MKAgent(Kalah currentGame, Minimax minimax, Protocol protocol) {
+    public MKAgent(KalahState currentGame, Minimax minimax, Protocol protocol) {
         this.currentGame = currentGame;
         this.minimax = minimax;
         this.protocol = protocol;
@@ -59,7 +59,7 @@ public class MKAgent {
     }
 
     private String performBestMove() {
-        Move bestMove = minimax.getBestMoveForAgent(this.currentGame.getBoard());
+        Move bestMove = minimax.getBestMoveForAgent(this.currentGame);
 
         this.currentGame.makeMove(bestMove);
 
@@ -70,8 +70,5 @@ public class MKAgent {
         }
     }
 
-    public Kalah getCurrentGame() {
-        return currentGame;
-    }
 
 }
