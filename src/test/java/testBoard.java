@@ -1,20 +1,15 @@
 import com.MKAgent.Board;
 import com.MKAgent.Kalah;
-import com.MKAgent.Side;
 import com.MKAgent.Move;
-import java.util.ArrayList;
-
+import com.MKAgent.Side;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class testBoard {
-    public static void main(String[] args)
-    {
-        startState();
-        emptyList();
-        specificCase();
-    }
 
     @Test
     public static void startState() {
@@ -23,7 +18,7 @@ public class testBoard {
         Board board = new Board(6, 4);
         Kalah kalah = new Kalah(board);
 
-        ArrayList<Move> output = kalah.getPossibleMovesForPlayer(board, Side.SOUTH);
+        ArrayList<Move> output = kalah.getPossibleMovesForAgent();
 
         assertFalse(output.isEmpty());
 
@@ -41,7 +36,7 @@ public class testBoard {
         for (int i = 1; i <= numOfHoles; i++)
             board.setSeeds(Side.SOUTH, i, 0);
 
-        ArrayList<Move> output = kalah.getPossibleMovesForPlayer(board, Side.SOUTH);
+        ArrayList<Move> output = kalah.getPossibleMovesForAgent();
 
         assertTrue(output.isEmpty());
     }
@@ -59,7 +54,7 @@ public class testBoard {
         board.setSeeds(Side.SOUTH, 5, 0);
         board.setSeeds(Side.SOUTH, 6, 0);
 
-        ArrayList<Move> output = kalah.getPossibleMovesForPlayer(board, Side.SOUTH);
+        ArrayList<Move> output = kalah.getPossibleMovesForAgent();
 
         assertTrue(output.size() == 1);
 

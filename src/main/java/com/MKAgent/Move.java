@@ -25,7 +25,7 @@ public class Move
      */
     public Move (Side side, int hole) throws IllegalArgumentException
     {
-    	if (hole < 1)
+    	if (hole < 0)
     		throw new IllegalArgumentException("Hole numbers must be >= 1, but " + hole + " was given.");
     	this.side = side;
     	this.hole = hole;
@@ -47,4 +47,21 @@ public class Move
     {
 		return hole;
     }
+
+	public boolean isSwap() {
+    	return hole == 0;
+	}
+
+	public static Move createNewSwapMove() {
+    	return new Move(Side.NORTH, 0);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Move move = (Move) o;
+		return hole == move.hole &&
+				side == move.side;
+	}
 }

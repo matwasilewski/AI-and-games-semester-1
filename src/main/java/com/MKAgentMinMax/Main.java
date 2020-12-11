@@ -1,23 +1,19 @@
 package com.MKAgentMinMax;
 
-import com.MKAgent.MsgType;
-import com.MKAgent.Side;
 import com.MKAgent.Board;
-import com.MKAgent.Protocol;
 import com.MKAgent.InvalidMessageException;
+import com.MKAgent.Kalah;
+import com.MKAgent.Protocol;
 
-import java.io.BufferedReader;
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
+
+import static com.MKAgent.Protocol.getMessageType;
 
 /**
  * The main application class. It also provides methods for communication
  * with the game engine.
  */
-public class Main
-{
+public class Main {
     /**
      * Input from the game engine.
      */
@@ -25,89 +21,69 @@ public class Main
 
     /**
      * Sends a message to the game engine.
+     *
      * @param msg The message.
      */
-    public static void sendMsg (String msg)
-    {
-    	System.out.print(msg);
-    	System.out.flush();
+    public static void sendMsg(String msg) {
+        System.out.print(msg);
+        System.out.flush();
     }
 
     /**
      * Receives a message from the game engine. Messages are terminated by
      * a '\n' character.
+     *
      * @return The message.
      * @throws IOException if there has been an I/O error.
      */
-    public static String recvMsg() throws IOException
-    {
-    	StringBuilder message = new StringBuilder();
-    	int newCharacter;
+    public static String recvMsg() throws IOException {
+        StringBuilder message = new StringBuilder();
+        int newCharacter;
 
-    	do
-    	{
-    		newCharacter = input.read();
-    		if (newCharacter == -1)
-    			throw new EOFException("Input ended unexpectedly.");
-    		message.append((char)newCharacter);
-    	} while((char)newCharacter != '\n');
+        do {
+            newCharacter = input.read();
+            if (newCharacter == -1)
+                throw new EOFException("Input ended unexpectedly.");
+            message.append((char) newCharacter);
+        } while ((char) newCharacter != '\n');
 
-		return message.toString();
+        return message.toString();
     }
 
-	/**
-	 * The main method, invoked when the program is started.
-	 * @param args Command line arguments.
-	 */
-	public static void main(String[] args)
-	{
-		String message;
-		boolean agentsMove;
-		Board board;
-		Side agentsSide;
-		boolean secondTurn;
+    /**
+     * The main method, invoked when the program is started.
+     *
+     * @param args Command line arguments.
+     */
+    public static void main(String[] args) {
+        String message;
 
-		try {
-			while(true) {
-				System.err.println();
-				message = recvMsg();
-				System.err.print("Received: " + message);
-				try {
-					MsgType messageType = Protocol.getMessageType(message);
+        MKAgent mkAgent = new MKAgent(new Kalah(new Board(7, 7)), new Minimax(), new Protocol());
 
-					switch (messageType) {
-						case START:
-							System.err.println("A start.");
-							boolean first = Protocol.interpretStartMsg(message);
+        try {
+            while (true) {
+                System.err.println();
 
-							System.err.println("Bot is the starting player: " + first);
+                message = recvMsg();
+                System.err.print("Received: " + message);
 
-							if (first) {
-								agentsSide = Side.SOUTH;
-								board = new Board(7, 7);
-								message = Protocol.createMoveMsg(Minimax.getMove(board));
-								System.out.print(message);
-								break;
-							}
+                try {
 
-							agentsSide = Side.NORTH;
-							secondTurn = true;
-							break;
-						case STATE:
-							// TODO 0.1
-							break;
-						case END:
-							System.err.println("An end. Bye bye!");
-							return;
-					}
-				}catch (InvalidMessageException e) {
-					System.err.println(e.getMessage());
-				}
-			}
-		} catch (IOException var10) {
-			System.err.println("This shouldn't happen: " + var10.getMessage());
-		} catch (Exception var11) {
-			System.err.println("This shouldn't happen: " + var11.getMessage());
-		}
-	}
+                    switch (getMessageType(message)) {
+                        case START -> sendMsg(mkAgent.recordStartMessageAndPrepareResponseMessage(message));
+                        case STATE -> sendMsg(mkAgent.recordStateMessageAndPrepareResponseMessage(message));
+                        case END -> {
+                            System.err.println("An end. Bye bye!");
+                            return;
+                        }
+                    }
+                } catch (InvalidMessageException e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+        } catch (Exception var11) {
+            System.err.println("This shouldn't happen: " + var11.getMessage());
+        }
+    }
+
 }

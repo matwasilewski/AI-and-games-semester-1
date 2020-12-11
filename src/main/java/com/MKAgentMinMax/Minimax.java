@@ -1,16 +1,18 @@
 package com.MKAgentMinMax;
 
-import com.MKAgent.Board;
+import com.MKAgent.*;
+
 
 public class Minimax {
     public int maxDepth = 10;
 
-    public static int getMove(Board board){
+    public Move getBestMoveForAgent(Kalah currentStateGame) {
+        return currentStateGame.getPossibleMovesForAgent().get(0);
         // TODO 1
-        return dfs(board, 0);
+        //return new Move(agentsSide, dfs(currentGame.getBoard(), 0));
     }
 
-    public static int dfs(Board board, int currentDepth){
+    private static int dfs(Board board, int currentDepth) {
         // get all the nodes
 
         // do the dfs over the nodes
@@ -19,4 +21,6 @@ public class Minimax {
 
         return 0;
     }
+
+
 }
