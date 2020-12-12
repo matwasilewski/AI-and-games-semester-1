@@ -33,6 +33,8 @@ public class Board extends Observable implements Cloneable
 	 */
 	public boolean swapable = false;
 
+	public int moveCount = 0;
+
 	/**
 	 * The board data. The first dimension of the array is 2, the second one
 	 * is the number of holes per side plus one. The data for the North side
