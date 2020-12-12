@@ -2,6 +2,8 @@ package com.MKAgent;
 
 import java.util.Observable;
 
+import static com.MKAgent.Side.SOUTH;
+
 /**
  * Representation of the Kalah board.<BR><BR>
  * The board has two sides: "North" and
@@ -28,10 +30,25 @@ public class Board extends Observable implements Cloneable
 	 */
 	private final int holes;
 
-	/**
-	 * The number of holes per side (must be >= 1).
-	 */
-	public boolean swapable = false;
+	public Side getAgentsSide() {
+		return agentsSide;
+	}
+
+	public int getMoveCount() {
+		return moveCount;
+	}
+
+	public void setAgentsSide(Side agentsSide) {
+		this.agentsSide = agentsSide;
+	}
+
+	public void incrementMoveCount() {
+		this.moveCount++;
+	}
+
+	private Side agentsSide = SOUTH;
+
+	private int moveCount = 0;
 
 	/**
 	 * The board data. The first dimension of the array is 2, the second one
@@ -105,9 +122,7 @@ public class Board extends Observable implements Cloneable
 	 */
 	public void swap ()
 	{
-		int[] temp = board[NORTH_ROW];
-		board[NORTH_ROW] = board[SOUTH_ROW];
-		board[SOUTH_ROW] = temp;
+		agentsSide = agentsSide.opposite();
 	}
     
 	/**
@@ -127,6 +142,9 @@ public class Board extends Observable implements Cloneable
     		board[NORTH_ROW][i] = original.board[NORTH_ROW][i];
     		board[SOUTH_ROW][i] = original.board[SOUTH_ROW][i];
     	}
+
+    	agentsSide = original.getAgentsSide();
+    	moveCount = original.getMoveCount();
     }
 
     /**
