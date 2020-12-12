@@ -160,8 +160,9 @@ public class Kalah {
         board.notifyObservers(move);
 
         // who's turn is it?
-        // TODO I think this is not implemented - At the start of the game, South goes first. South has only one turn, even if it ends in the last seed deposited into South's scoring well.
-        if (sowHole == 0)  // the store (implies (sowSide == move.getSide()))
+        if (board.getMoveCount() == 1)
+            return move.getSide().opposite();
+        else if (sowHole == 0)  // the store (implies (sowSide == move.getSide()))
             return move.getSide();  // move again
         else
             return move.getSide().opposite();
