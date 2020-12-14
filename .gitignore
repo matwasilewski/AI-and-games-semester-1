@@ -1,9 +1,9 @@
 unjar
 unjar/*
-
 .idea
 .idea/*
-
 out/*
 out/
+target/*
 /minimaxBot.iml
+

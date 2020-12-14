@@ -1,6 +1,8 @@
 import com.MKAgent.Board;
 import com.MKAgent.Kalah;
 import com.MKAgent.Move;
+import java.util.ArrayList;
+import com.MKAgentMinMax.PossibleMoves;
 import com.MKAgent.Side;
 import org.junit.jupiter.api.Test;
 
@@ -9,16 +11,14 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class testBoard {
-
+public class TestBoard {
     @Test
-    public static void startState() {
+    public void testStartState() {
         System.out.println("Testing initial state...");
 
         Board board = new Board(6, 4);
-        Kalah kalah = new Kalah(board);
 
-        ArrayList<Move> output = kalah.getPossibleMovesForAgent();
+        ArrayList<Move> output = PossibleMoves.getMoves(board, Side.SOUTH);
 
         assertFalse(output.isEmpty());
 
@@ -27,25 +27,23 @@ public class testBoard {
         }
     }
     @Test
-    public static void emptyList() {
+    public void testEmptyList() {
         System.out.println("Testing all holes being empty...");
         int numOfHoles = 6;
         Board board = new Board(numOfHoles, 4);
-        Kalah kalah = new Kalah(board);
 
         for (int i = 1; i <= numOfHoles; i++)
             board.setSeeds(Side.SOUTH, i, 0);
 
-        ArrayList<Move> output = kalah.getPossibleMovesForAgent();
+        ArrayList<Move> output = PossibleMoves.getMoves(board, Side.SOUTH);
 
         assertTrue(output.isEmpty());
     }
     @Test
-    public static void specificCase(){
+    public void testSpecificCase(){
         System.out.println("Testing a specific position with a single option...");
         int numOfHoles = 6;
         Board board = new Board(numOfHoles, 4);
-        Kalah kalah = new Kalah(board);
 
         board.setSeeds(Side.SOUTH, 1, 0);
         board.setSeeds(Side.SOUTH, 2, 2);
@@ -54,7 +52,7 @@ public class testBoard {
         board.setSeeds(Side.SOUTH, 5, 0);
         board.setSeeds(Side.SOUTH, 6, 0);
 
-        ArrayList<Move> output = kalah.getPossibleMovesForAgent();
+        ArrayList<Move> output = PossibleMoves.getMoves(board, Side.SOUTH);
 
         assertTrue(output.size() == 1);
 

@@ -1,68 +1,65 @@
 package com.MKAgent;
 
+import com.MKAgentMinMax.PossibleMoves;
+
 import java.util.ArrayList;
 
-import static com.MKAgent.Move.createNewSwapMove;
 import static com.MKAgent.Side.NORTH;
 import static com.MKAgent.Side.SOUTH;
 
-public class Kalah implements Cloneable {
-
+public class Kalah {
+    /**
+     * The board to play on.
+     */
     private final Board board;
 
-    private Side agentsSide = SOUTH;
-
-    private boolean swappable = true;
-
-
+    /**
+     * @param board The board to play on.
+     * @throws NullPointerException if "board" is null.
+     */
     public Kalah(Board board) throws NullPointerException {
         if (board == null)
             throw new NullPointerException();
         this.board = board;
     }
 
-
-    public Kalah clone() throws CloneNotSupportedException {
-        Kalah cloneGameState = new Kalah(this.getBoard().clone());
-        cloneGameState.agentsSide = this.agentsSide;
-        cloneGameState.swappable = this.swappable;
-        return cloneGameState;
-    }
-
-    public void setAgentsSide(Side agentsSide) {
-        this.agentsSide = agentsSide;
-    }
-
+    /**
+     * @return The board this object operates on.
+     */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Performs a move on the underlying board. The move must be legal. If
+     * the move terminates the game, the remaining seeds of the opponent are
+     * collected into their store as well (so that all holes are empty).<BR>
+     * The "notifyObservers()" method of the board is called with the "move"
+     * as argument.
+     *
+     * @param move The move to make.
+     * @return The side who's turn it is after the move. Arbitrary if the
+     *         game is over.
+     * @see java.util.Observable#notifyObservers(Object)
+     */
     public Side makeMove(Move move) {
-        if(move.isSwap()) {
-            this.swappable = !this.swappable;
-            this.agentsSide = this.agentsSide.opposite();
-            return this.agentsSide.opposite();
-        } else {
-
-            return makeMove(board, move);
-        }
+        return makeMove(board, move);
     }
 
-    public boolean isLegalMove(Move move) {
+    /**
+     * Checks whether a given move is legal on the underlying board. The move
+     * is not actually made.
+     * @param move The move to check.
+     * @param board The board to check.
+     * @return true if the move is legal, false if not.
+     */
+    public static boolean isLegalMove(Move move, Board board) {
         // check if the hole is existent and non-empty:
-        return (move.getHole() <= this.board.getNoOfHoles())
-                && (this.board.getSeeds(move.getSide(), move.getHole()) != 0);
+        return (move.getHole() <= board.getNoOfHoles())
+                && (board.getSeeds(move.getSide(), move.getHole()) != 0);
     }
 
-    public ArrayList<Move> getPossibleMovesForAgent() {
-        return getMoves(this.agentsSide);
-    }
-
-    public ArrayList<Move> getPossibleMovesForOpponent() {
-        return getMoves(this.agentsSide.opposite());
-    }
-
-    private Side makeMove(Board board, Move move) {
+    public static Side makeMove(Board board, Move move) {
 		/* from the documentation:
 		  "1. The counters are lifted from this hole and sown in anti-clockwise direction, starting
 		      with the next hole. The player's own kalahah is included in the sowing, but the
@@ -81,6 +78,12 @@ public class Kalah implements Cloneable {
 		    	collects the most counters is the winner."
 		*/
 
+        if(move.isSwap()) {
+            board.swap();
+            return NORTH;
+        }
+
+        board.incrementMoveCount();
 
         // pick seeds:
         int seedsToSow = board.getSeeds(move.getSide(), move.getHole());
@@ -157,35 +160,49 @@ public class Kalah implements Cloneable {
         board.notifyObservers(move);
 
         // who's turn is it?
-        if (sowHole == 0)  // the store (implies (sowSide == move.getSide()))
+        if (board.getMoveCount() == 1)
+            return move.getSide().opposite();
+        else if (sowHole == 0)  // the store (implies (sowSide == move.getSide()))
             return move.getSide();  // move again
         else
             return move.getSide().opposite();
     }
 
-    private boolean holesEmpty(Board board, Side side) {
+    /**
+     * Checks whether all holes on a given side are empty.
+     * @param board The board to check.
+     * @param side The side to check.
+     * @return "true" iff all holes on side "side" are empty.
+     */
+    private static boolean holesEmpty(Board board, Side side) {
         for (int hole = 1; hole <= board.getNoOfHoles(); hole++)
             if (board.getSeeds(side, hole) != 0)
                 return false;
         return true;
     }
 
-    private ArrayList<Move> getMoves(Side opposite) {
-        ArrayList<Move> possibleMoves = new ArrayList<>();
+    /**
+     * Checks whether the game is over (based on the board).
+     * @param board The board to check the game state for.
+     * @return "true" if the game is over, "false" otherwise.
+     */
+    public static boolean gameOver (Board board)
+    {
+        // The game is over if one of the agents can't make another move.
+        return holesEmpty(board, Side.NORTH) || holesEmpty(board, Side.SOUTH);
+    }
+    /**
+     * Gets score different
+     * @param board The board to check the game state for.
+     * @return result > 0 when North is winning, result < 0 when South is winning
+     */
+    public static int getScoreForSide(Board board, Side side)
+    {
+        return board.getSeedsInStore(side) - board.getSeedsInStore(side.opposite());
+    }
 
-        for (int i = 1; i <= this.board.getNoOfHoles(); i++) {
-            Move move = new Move(opposite, i);
-            if (isLegalMove(move)) {
-                possibleMoves.add(move);
-            }
-
-        }
-
-        if (this.swappable && opposite == NORTH) { // can swap
-            possibleMoves.add(createNewSwapMove());
-        }
-
-        return possibleMoves;
+    public static ArrayList<Move> getMoves(Board board, Side side) {
+        return PossibleMoves.getMoves(board, side);
     }
 }
 

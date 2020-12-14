@@ -29,10 +29,10 @@ public class MKAgent {
         boolean isAgentStartingFirst = protocol.interpretStartMsg(message);
 
         if (isAgentStartingFirst) {
-            currentGame.setAgentsSide(SOUTH);
+            currentGame.getBoard().setAgentsSide(SOUTH);
             return performBestMove();
         } else {
-            currentGame.setAgentsSide(NORTH);
+            currentGame.getBoard().setAgentsSide(NORTH);
             return "";
         }
     }
@@ -47,21 +47,21 @@ public class MKAgent {
         } else if (moveTurn.move == -1) {
             // Opponent swapped
             currentGame.makeMove(createNewSwapMove());
-
             return performBestMove();
         } else if (moveTurn.again) {
 
             // Agent's turn
             return performBestMove();
-
         } else {
+            currentGame.getBoard().incrementMoveCount();
+
             // Opponent's turn again
             return "";
         }
     }
 
     private String performBestMove() {
-        Move bestMove = minimax.getBestMoveForAgent(this.currentGame);
+        Move bestMove = minimax.getBestMove(this.currentGame.getBoard());
 
         this.currentGame.makeMove(bestMove);
 

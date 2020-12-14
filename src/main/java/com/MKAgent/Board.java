@@ -2,6 +2,8 @@ package com.MKAgent;
 
 import java.util.Observable;
 
+import static com.MKAgent.Side.SOUTH;
+
 /**
  * Representation of the Kalah board.<BR><BR>
  * The board has two sides: "North" and
@@ -28,6 +30,26 @@ public class Board extends Observable implements Cloneable
 	 */
 	private final int holes;
 
+	public Side getAgentsSide() {
+		return agentsSide;
+	}
+
+	public int getMoveCount() {
+		return moveCount;
+	}
+
+	public void setAgentsSide(Side agentsSide) {
+		this.agentsSide = agentsSide;
+	}
+
+	public void incrementMoveCount() {
+		this.moveCount++;
+	}
+
+	private Side agentsSide = SOUTH;
+
+	private int moveCount = 0;
+
 	/**
 	 * The board data. The first dimension of the array is 2, the second one
 	 * is the number of holes per side plus one. The data for the North side
@@ -52,9 +74,8 @@ public class Board extends Observable implements Cloneable
     	}
     }
 
-
     /**
-     * Creates a new board.
+     * Creates a new board from the template
      * 
      * @param holes The number of holes per side (must be >= 1).
      * @param seeds The initial number of seeds per hole (must be >= 0). The
@@ -78,6 +99,31 @@ public class Board extends Observable implements Cloneable
     		board[SOUTH_ROW][i] = seeds;
     	}
     }
+
+	/**
+	 * Creates a new board from a template
+	 *
+	 * @param holes The number of holes per side (must be >= 1).
+	 *        stores are empty initially.
+	 * @throws IllegalArgumentException if any of the arguments is outside of
+	 *         the valid range.
+	 */
+	public Board (int holes, int[][] template_board) throws IllegalArgumentException
+	{
+		if (holes < 1)
+			throw new IllegalArgumentException("There has to be at least one hole, but " + holes + " were requested.");
+
+		this.holes = holes;
+		board = template_board;
+	}
+
+	/**
+	 * Swaps the board.
+	 */
+	public void swap ()
+	{
+		agentsSide = agentsSide.opposite();
+	}
     
 	/**
      * Creates a new board as the copy of a given one. Both copies can then be
@@ -96,6 +142,9 @@ public class Board extends Observable implements Cloneable
     		board[NORTH_ROW][i] = original.board[NORTH_ROW][i];
     		board[SOUTH_ROW][i] = original.board[SOUTH_ROW][i];
     	}
+
+    	agentsSide = original.getAgentsSide();
+    	moveCount = original.getMoveCount();
     }
 
     /**
@@ -275,10 +324,10 @@ public class Board extends Observable implements Cloneable
 
 		boardString.append(board[NORTH_ROW][0] + "  --");
 		for (int i=holes; i >= 1; i--)
-			boardString.append("  " + board[NORTH_ROW][i]);
+			boardString.append("  " + board[NORTH_ROW][i] + " id: " + i);
 		boardString.append("\n");
 		for (int i=1; i <= holes; i++)
-			boardString.append(board[SOUTH_ROW][i] + "  ");
+			boardString.append(board[SOUTH_ROW][i] + " id: " + i + "  ");
 		boardString.append("--  " + board[SOUTH_ROW][0] + "\n");
 
 		return boardString.toString();
