@@ -4,7 +4,6 @@ import com.MKAgentMinMax.PossibleMoves;
 
 import java.util.ArrayList;
 
-import static com.MKAgent.Move.createNewSwapMove;
 import static com.MKAgent.Side.NORTH;
 import static com.MKAgent.Side.SOUTH;
 
@@ -13,8 +12,6 @@ public class Kalah {
      * The board to play on.
      */
     private final Board board;
-    public static Side agentsSide = SOUTH;
-    private static boolean swappable = true;
 
     /**
      * @param board The board to play on.
@@ -43,26 +40,10 @@ public class Kalah {
      * @param move The move to make.
      * @return The side who's turn it is after the move. Arbitrary if the
      *         game is over.
-     * @see #isLegalMove(Move)
-     * @see #gameOver()
      * @see java.util.Observable#notifyObservers(Object)
      */
     public Side makeMove(Move move) {
         return makeMove(board, move);
-    }
-
-    /**
-     * Checks whether a given move is legal on the underlying board. The move
-     * is not actually made.
-     * @param move The move to check.
-     * @return true if the move is legal, false if not.
-     */
-    public boolean isLegalMove(Move move) {
-        return isLegalMove(move, board);
-    }
-
-    public ArrayList<Move> getMoves(){
-        return getMoves(board, agentsSide);
     }
 
     /**
@@ -76,15 +57,6 @@ public class Kalah {
         // check if the hole is existent and non-empty:
         return (move.getHole() <= board.getNoOfHoles())
                 && (board.getSeeds(move.getSide(), move.getHole()) != 0);
-    }
-
-    public boolean gameOver ()
-    {
-        return gameOver(this.board);
-    }
-
-    public void setAgentsSide(Side side){
-        Kalah.agentsSide = side;
     }
 
     public static Side makeMove(Board board, Move move) {
@@ -106,11 +78,12 @@ public class Kalah {
 		    	collects the most counters is the winner."
 		*/
 
-        // TODO Not working properly
         if(move.isSwap()) {
             board.swap();
-            return move.getSide().opposite();
+            return NORTH;
         }
+
+        board.incrementMoveCount();
 
         // pick seeds:
         int seedsToSow = board.getSeeds(move.getSide(), move.getHole());
@@ -187,8 +160,9 @@ public class Kalah {
         board.notifyObservers(move);
 
         // who's turn is it?
-        // TODO I think this is not implemented - At the start of the game, South goes first. South has only one turn, even if it ends in the last seed deposited into South's scoring well.
-        if (sowHole == 0)  // the store (implies (sowSide == move.getSide()))
+        if (board.getMoveCount() == 1)
+            return move.getSide().opposite();
+        else if (sowHole == 0)  // the store (implies (sowSide == move.getSide()))
             return move.getSide();  // move again
         else
             return move.getSide().opposite();
@@ -222,9 +196,9 @@ public class Kalah {
      * @param board The board to check the game state for.
      * @return result > 0 when North is winning, result < 0 when South is winning
      */
-    public static int getScoreDifference (Board board)
+    public static int getScoreForSide(Board board, Side side)
     {
-        return board.getSeedsInStore(Side.NORTH) - board.getSeedsInStore(Side.SOUTH);
+        return board.getSeedsInStore(side) - board.getSeedsInStore(side.opposite());
     }
 
     public static ArrayList<Move> getMoves(Board board, Side side) {

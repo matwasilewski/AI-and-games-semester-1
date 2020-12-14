@@ -1,7 +1,7 @@
 if [[ $* == *-b* ]]
 then
   echo "Building package"
-  mvn package
+  mvn clean compile jar:jar
 fi
 
 if [[ $* == *-j* || $* == *-a* ]]
