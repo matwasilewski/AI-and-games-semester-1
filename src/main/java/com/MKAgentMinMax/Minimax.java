@@ -64,6 +64,7 @@ public class Minimax {
             }else if(!maxPlayer && moveMade.getScore() < bestMoveToTake.getScore()){
                 // minimize the outcome
                 bestMoveToTake = moveMade;
+                beta = Math.min(beta, bestMoveToTake.getScore());
             }
             if (beta <= alpha){
                 break;
