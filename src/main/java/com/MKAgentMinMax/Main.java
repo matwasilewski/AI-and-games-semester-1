@@ -70,12 +70,15 @@ public class Main {
                 try {
 
                     switch (getMessageType(message)) {
-                        case START -> sendMsg(mkAgent.recordStartMessageAndPrepareResponseMessage(message));
-                        case STATE -> sendMsg(mkAgent.recordStateMessageAndPrepareResponseMessage(message));
-                        case END -> {
+                        case START:
+                            sendMsg(mkAgent.recordStartMessageAndPrepareResponseMessage(message));
+                            break;
+                        case STATE:
+                            sendMsg(mkAgent.recordStateMessageAndPrepareResponseMessage(message));
+                            break;
+                        default:
                             System.err.println("An end. Bye bye!");
                             return;
-                        }
                     }
                 } catch (InvalidMessageException e) {
                     System.err.println(e.getMessage());
