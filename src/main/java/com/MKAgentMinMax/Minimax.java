@@ -12,11 +12,13 @@ public class Minimax {
     }
 
     public Move getBestMove(Board board) {
+        Integer alpha = Integer.MIN_VALUE;
+        Integer beta = Integer.MAX_VALUE;
 
-        return dfs(board, board.getAgentsSide(),0).getMove();
+        return dfs(board, board.getAgentsSide(),0, alpha, beta).getMove();
     }
 
-    public MinimaxMove dfs(Board board, Side currentSide, int currentDepth){
+    public MinimaxMove dfs(Board board, Side currentSide, int currentDepth, Integer alpha, Integer beta){
         if(currentDepth == maxDepth){
             return new MinimaxMove(Heuristic.getScore(board, board.getAgentsSide()));
         }
@@ -52,15 +54,19 @@ public class Minimax {
             Board new_board = new Board(board);
             Side nextSide = Kalah.makeMove(new_board, move);
 
-            moveMade = dfs(new_board, nextSide,currentDepth+1);
+            moveMade = dfs(new_board, nextSide,currentDepth+1, alpha, beta);
             moveMade.updateMove(move);
 
             if(maxPlayer && moveMade.getScore() > bestMoveToTake.getScore()){
                 // maximize the outcome
                 bestMoveToTake = moveMade;
+                alpha = Math.max(alpha, bestMoveToTake.getScore());
             }else if(!maxPlayer && moveMade.getScore() < bestMoveToTake.getScore()){
                 // minimize the outcome
                 bestMoveToTake = moveMade;
+            }
+            if (beta <= alpha){
+                break;
             }
         }
 
