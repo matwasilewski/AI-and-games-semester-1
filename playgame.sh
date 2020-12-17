@@ -11,6 +11,7 @@ fi
 
 export AGENT_RUN_WITH_ARGS="java -jar target/minimaxBot-1.0.1.jar 10 5 1 1 0 0 0"
 
+
 if [[ $* == *-j* || $* == *-a* ]]
 then
   if [[ $* == *--second* ]]
