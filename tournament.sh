@@ -29,14 +29,14 @@ do
 ##    java -jar resources/ManKalah.jar "$AGENT_RUN_WITH_ARGS" "java -jar resources/Test_Agents/Group2Agent.jar" >  results/$MAX_DEPTH-$WEIGHT_OF_GAME_ORVER_SCORE-$WEIGHT_OF_FIRST_HEURISTIC-$WEIGHT_OF_SECOND_HEURISTIC.log
 #    java -jar resources/ManKalah.jar "$AGENT_RUN_WITH_ARGS" "java -jar resources/Test_Agents/error404.jar" >  results/first_player/$MAX_DEPTH-$WEIGHT_OF_GAME_ORVER_SCORE-$WEIGHT_OF_FIRST_HEURISTIC-$WEIGHT_OF_SECOND_HEURISTIC.log
 #  fi
-    java -jar resources/ManKalah.jar "java -jar resources/Test_Agents/error404.jar" "$AGENT_RUN_WITH_ARGS" >  results/second_player/$MAX_DEPTH-$WEIGHT_OF_GAME_ORVER_SCORE-$WEIGHT_OF_FIRST_HEURISTIC-$WEIGHT_OF_SECOND_HEURISTIC.log
-    java -jar resources/ManKalah.jar "$AGENT_RUN_WITH_ARGS" "java -jar resources/Test_Agents/error404.jar" >  results/first_player/$MAX_DEPTH-$WEIGHT_OF_GAME_ORVER_SCORE-$WEIGHT_OF_FIRST_HEURISTIC-$WEIGHT_OF_SECOND_HEURISTIC.log
+    java -jar resources/ManKalah.jar "java -jar resources/Test_Agents/error404.jar" "$AGENT_RUN_WITH_ARGS" >  results/second_player/error404$MAX_DEPTH-$WEIGHT_OF_GAME_ORVER_SCORE-$WEIGHT_OF_FIRST_HEURISTIC-$WEIGHT_OF_SECOND_HEURISTIC.log
+    java -jar resources/ManKalah.jar "$AGENT_RUN_WITH_ARGS" "java -jar resources/Test_Agents/error404.jar" >  results/first_player/error404$MAX_DEPTH-$WEIGHT_OF_GAME_ORVER_SCORE-$WEIGHT_OF_FIRST_HEURISTIC-$WEIGHT_OF_SECOND_HEURISTIC.log
 
     java -jar resources/ManKalah.jar "java -jar resources/Test_Agents/Group2Agent.jar" "$AGENT_RUN_WITH_ARGS" >  results/second_player/Group2Agent$MAX_DEPTH-$WEIGHT_OF_GAME_ORVER_SCORE-$WEIGHT_OF_FIRST_HEURISTIC-$WEIGHT_OF_SECOND_HEURISTIC.log
     java -jar resources/ManKalah.jar "$AGENT_RUN_WITH_ARGS" "java -jar resources/Test_Agents/Group2Agent.jar" >  results/first_player/Group2Agent$MAX_DEPTH-$WEIGHT_OF_GAME_ORVER_SCORE-$WEIGHT_OF_FIRST_HEURISTIC-$WEIGHT_OF_SECOND_HEURISTIC.log
 
-    java -jar resources/ManKalah.jar "java -jar resources/Test_Agents/JimmyPlayer.jar" "$AGENT_RUN_WITH_ARGS" >  results/second_player/$MAX_DEPTH-$WEIGHT_OF_GAME_ORVER_SCORE-$WEIGHT_OF_FIRST_HEURISTIC-$WEIGHT_OF_SECOND_HEURISTIC.log
-    java -jar resources/ManKalah.jar "$AGENT_RUN_WITH_ARGS" "java -jar resources/Test_Agents/JimmyPlayer.jar" >  results/first_player/$MAX_DEPTH-$WEIGHT_OF_GAME_ORVER_SCORE-$WEIGHT_OF_FIRST_HEURISTIC-$WEIGHT_OF_SECOND_HEURISTIC.log
+    java -jar resources/ManKalah.jar "java -jar resources/Test_Agents/JimmyPlayer.jar" "$AGENT_RUN_WITH_ARGS" >  results/second_player/JimmyPlayer$MAX_DEPTH-$WEIGHT_OF_GAME_ORVER_SCORE-$WEIGHT_OF_FIRST_HEURISTIC-$WEIGHT_OF_SECOND_HEURISTIC.log
+    java -jar resources/ManKalah.jar "$AGENT_RUN_WITH_ARGS" "java -jar resources/Test_Agents/JimmyPlayer.jar" >  results/first_player/JimmyPlayer$MAX_DEPTH-$WEIGHT_OF_GAME_ORVER_SCORE-$WEIGHT_OF_FIRST_HEURISTIC-$WEIGHT_OF_SECOND_HEURISTIC.log
 done
 done
 done
