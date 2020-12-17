@@ -12,13 +12,13 @@ rm results/*
 rm results/first_player/*
 rm results/second_player/*
 
-for MAX_DEPTH in 10
+for MAX_DEPTH in 8
 do
-for WEIGHT_OF_GAME_ORVER_SCORE in 0 1 2 3 4 5 6
+for WEIGHT_OF_GAME_ORVER_SCORE in 0
 do
-for WEIGHT_OF_FIRST_HEURISTIC in 0 1
+for WEIGHT_OF_FIRST_HEURISTIC in 0 1 2 3
 do
-for WEIGHT_OF_SECOND_HEURISTIC in 0 1
+for WEIGHT_OF_SECOND_HEURISTIC in 0 1 2 3
 do
   export AGENT_RUN_WITH_ARGS="java -jar target/minimaxBot-1.0.1.jar $MAX_DEPTH $WEIGHT_OF_GAME_ORVER_SCORE $WEIGHT_OF_FIRST_HEURISTIC $WEIGHT_OF_SECOND_HEURISTIC"
 #	if [[ $* == *--second* ]]

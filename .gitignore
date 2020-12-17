@@ -7,4 +7,4 @@ out/
 target/*
 /minimaxBot.iml
 results/*
-heuristic_results/*
+heuristic_results/test/*
