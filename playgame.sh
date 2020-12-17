@@ -5,11 +5,12 @@ then
 fi
 
 #- intArg1 - max depth of minimax tree
-#- intArg2 - weight of game over score function
-#- intArg3 - weight of first heuristic
-#- intArg4 - weight of second heuristic
+#- intArg2 - depth of parallel
+#- intArg3 - weight of game over score function
+#- intArg4 - weight of first heuristic
+#- intArg5 - weight of second heuristic
 
-export AGENT_RUN_WITH_ARGS="java -jar target/minimaxBot-1.0.1.jar 10 5 1 1 0 0 0"
+export AGENT_RUN_WITH_ARGS="java -jar target/minimaxBot-1.0.1.jar 10 0 5 1 1 0 0 0"
 
 
 if [[ $* == *-j* || $* == *-a* ]]
