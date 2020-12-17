@@ -1,4 +1,0 @@
-Player: 5-0-1-0 Total win: 2 Total played: 8 Avg time: 2.875
-Player: 5-0-1-1 Total win: 2 Total played: 8 Avg time: 2.875
-Player: 10-0-1-0 Total win: 6 Total played: 8 Avg time: 102.25
-Player: 10-0-1-1 Total win: 6 Total played: 8 Avg time: 106.125
