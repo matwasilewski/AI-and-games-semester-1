@@ -10,6 +10,7 @@ import com.MKAgentMinMax.heuristics.SeedsInAgentsStoreHeuristic;
 import java.io.*;
 
 import static com.MKAgent.Protocol.getMessageType;
+import static java.lang.Integer.*;
 import static java.util.Arrays.asList;
 
 /**
@@ -59,12 +60,13 @@ public class Main {
      * @param args Command line arguments.
      */
     public static void main(String[] args) {
-        int maxDepth = Integer.valueOf(args[0]);
+        int maxDepth = parseInt(args[0]);
+        int gameOverNodeScoreWeight = parseInt(args[1]);
 
         Scoring scoring = new Scoring(asList(
-                new DifferenceOfSeedsInStoreHeuristic(Integer.valueOf(args[1])),
-                new SeedsInAgentsStoreHeuristic(Integer.valueOf(args[2]))
-        ));
+                new DifferenceOfSeedsInStoreHeuristic(parseInt(args[2])),
+                new SeedsInAgentsStoreHeuristic(parseInt(args[3]))
+        ), gameOverNodeScoreWeight);
 
         Minimax minimax = new Minimax(maxDepth, scoring);
         MKAgent mkAgent = new MKAgent(new Kalah(new Board(7, 7)), minimax, new Protocol());

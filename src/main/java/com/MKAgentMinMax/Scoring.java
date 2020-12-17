@@ -9,10 +9,12 @@ import java.util.List;
 public class Scoring {
 
     private List<Heuristic> heuristics;
+    private int gameOverWeight;
 
-    public Scoring(List<Heuristic> heuristics) {
+    public Scoring(List<Heuristic> heuristics, int gameOverWeight) {
         this.heuristics = heuristics;
 
+        this.gameOverWeight = gameOverWeight;
     }
 
     public int getScore(Board board){
@@ -20,6 +22,6 @@ public class Scoring {
     }
 
     public int getGameOverScore(Board board) {
-        return Kalah.getScoreForSide(board, board.getAgentsSide());
+        return Kalah.getScoreForSide(board, board.getAgentsSide()) * gameOverWeight;
     }
 }
