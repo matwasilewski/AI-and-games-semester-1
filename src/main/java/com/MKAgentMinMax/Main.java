@@ -60,7 +60,8 @@ public class Main {
      */
     public static void main(String[] args) {
         int maxDepth = parseInt(args[0]);
-        int gameOverNodeScoreWeight = parseInt(args[1]);
+        int maxLevelsParallel = parseInt(args[1]);
+        int gameOverNodeScoreWeight = parseInt(args[2]);
 
         Scoring scoring = new Scoring(asList(
                 new DifferenceOfSeedsInStoreHeuristic(parseInt(args[2])),
@@ -70,7 +71,7 @@ public class Main {
                 new NumberOfStonesInMiddleHeuristic(parseInt(args[6]))
         ), gameOverNodeScoreWeight);
 
-        Minimax minimax = new Minimax(maxDepth, scoring);
+        Minimax minimax = new Minimax(maxDepth, maxLevelsParallel, scoring);
         MKAgent mkAgent = new MKAgent(new Kalah(new Board(7, 7)), minimax, new Protocol());
 
         String message;

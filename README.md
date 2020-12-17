@@ -9,9 +9,10 @@ Run after compiling into JAR:
 Run with `java -jar target/minimaxBot-1.0.1.jar intArg1 intArg2 intArg3 intArg4 ...`
 
 - intArg1 - max depth of minimax tree
-- intArg2 - weight of game over score function
-- intArg3 - weight of first heuristic
-- intArg4 - weight of second heuristic
+- intArg2 - max depth of parallel root tree
+- intArg3 - weight of game over score function
+- intArg4 - weight of first heuristic
+- intArg5 - weight of second heuristic
 - ....
 
 
