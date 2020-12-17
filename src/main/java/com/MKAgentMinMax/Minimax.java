@@ -5,10 +5,13 @@ import com.MKAgent.*;
 import java.util.ArrayList;
 
 public class Minimax {
-    public static int maxDepth = 8;
+    private int maxDepth = 8;
 
-    public Minimax(){
-        // initialize game Tree?
+    private Scoring scoring;
+
+    public Minimax(int maxDepth, Scoring scoring){
+        this.scoring = scoring;
+        this.maxDepth = maxDepth;
     }
 
     public Move getBestMove(Board board) {
@@ -20,20 +23,16 @@ public class Minimax {
 
     public MinimaxMove dfs(Board board, Side currentSide, int currentDepth, Integer alpha, Integer beta){
         if(currentDepth == maxDepth){
-            return new MinimaxMove(Heuristic.getScore(board, board.getAgentsSide()));
+            return new MinimaxMove(scoring.getScore(board));
         }
 
         if(Kalah.gameOver(board)){
-            return new MinimaxMove(Kalah.getScoreForSide(board, board.getAgentsSide()));
+            return new MinimaxMove(scoring.getGameOverScore(board));
         }
 
         // get all the nodes
         ArrayList<Move> possibleMoves = Kalah.getMoves(board, currentSide);
 
-//        // for unitTesting
-//        if(possibleMoves.size() == 0){
-//            return new MinimaxMove(Kalah.getScoreDifference(board));
-//        }
 
         int current_score;
         boolean maxPlayer;
