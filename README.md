@@ -5,6 +5,18 @@ Run after compiling into JAR:
 `java -jar resources/ManKalah.jar "java -jar resources/MKRefAgent.jar" "java -jar target/minimaxBot-1.0.1.jar"`
 
 
+
+Run with `java -jar target/minimaxBot-1.0.1.jar intArg1 intArg2 intArg3 intArg4 ...`
+
+- intArg1 - max depth of minimax tree
+- intArg2 - max depth of parallel root tree
+- intArg3 - weight of game over score function
+- intArg4 - weight of first heuristic
+- intArg5 - weight of second heuristic
+- ....
+
+
+
 # AI-and-games-semester-1
 
 **Schedule**

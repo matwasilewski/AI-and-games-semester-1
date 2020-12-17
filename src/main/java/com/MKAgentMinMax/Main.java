@@ -4,10 +4,14 @@ import com.MKAgent.Board;
 import com.MKAgent.InvalidMessageException;
 import com.MKAgent.Kalah;
 import com.MKAgent.Protocol;
+import com.MKAgentMinMax.heuristics.DifferenceOfSeedsInStoreHeuristic;
+import com.MKAgentMinMax.heuristics.SeedsInAgentsStoreHeuristic;
 
 import java.io.*;
 
 import static com.MKAgent.Protocol.getMessageType;
+import static java.lang.Integer.*;
+import static java.util.Arrays.asList;
 
 /**
  * The main application class. It also provides methods for communication
@@ -56,9 +60,20 @@ public class Main {
      * @param args Command line arguments.
      */
     public static void main(String[] args) {
+        int maxDepth = parseInt(args[0]);
+        int maxLevelsParallel = parseInt(args[1]);
+        int gameOverNodeScoreWeight = parseInt(args[2]);
+
+        Scoring scoring = new Scoring(asList(
+                new DifferenceOfSeedsInStoreHeuristic(parseInt(args[3])),
+                new SeedsInAgentsStoreHeuristic(parseInt(args[4]))
+        ), gameOverNodeScoreWeight);
+
+        Minimax minimax = new Minimax(maxDepth, maxLevelsParallel, scoring);
+        MKAgent mkAgent = new MKAgent(new Kalah(new Board(7, 7)), minimax, new Protocol());
+
         String message;
 
-        MKAgent mkAgent = new MKAgent(new Kalah(new Board(7, 7)), new Minimax(), new Protocol());
 
         try {
             while (true) {
