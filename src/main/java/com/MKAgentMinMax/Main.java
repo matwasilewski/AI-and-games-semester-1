@@ -4,8 +4,7 @@ import com.MKAgent.Board;
 import com.MKAgent.InvalidMessageException;
 import com.MKAgent.Kalah;
 import com.MKAgent.Protocol;
-import com.MKAgentMinMax.heuristics.DifferenceOfSeedsInStoreHeuristic;
-import com.MKAgentMinMax.heuristics.SeedsInAgentsStoreHeuristic;
+import com.MKAgentMinMax.heuristics.*;
 
 import java.io.*;
 
@@ -65,8 +64,11 @@ public class Main {
         int gameOverNodeScoreWeight = parseInt(args[2]);
 
         Scoring scoring = new Scoring(asList(
-                new DifferenceOfSeedsInStoreHeuristic(parseInt(args[3])),
-                new SeedsInAgentsStoreHeuristic(parseInt(args[4]))
+                new DifferenceOfSeedsInStoreHeuristic(parseInt(args[2])),
+                new SeedsInAgentsStoreHeuristic(parseInt(args[3])),
+                new NumberOfStonesCloseToHomeHeuristic(parseInt(args[4])),
+                new NumberOfStonesFarFromHomeHeuristic(parseInt(args[5])),
+                new NumberOfStonesInMiddleHeuristic(parseInt(args[6]))
         ), gameOverNodeScoreWeight);
 
         Minimax minimax = new Minimax(maxDepth, maxLevelsParallel, scoring);

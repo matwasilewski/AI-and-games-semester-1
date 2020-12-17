@@ -4,13 +4,19 @@ then
   mvn clean compile jar:jar
 fi
 
-export AGENT_RUN_WITH_ARGS="java -jar target/minimaxBot-1.0.1.jar 10 0 5 1 1"
+#- intArg1 - max depth of minimax tree
+#- intArg2 - weight of game over score function
+#- intArg3 - weight of first heuristic
+#- intArg4 - weight of second heuristic
+
+export AGENT_RUN_WITH_ARGS="java -jar target/minimaxBot-1.0.1.jar 10 5 1 1 0 0 0"
+
 
 if [[ $* == *-j* || $* == *-a* ]]
 then
   if [[ $* == *--second* ]]
   then
-    java -jar resources/ManKalah.jar "java -jar resources/Test_Agents/JimmyPlayer.jar" "$AGENT_RUN_WITH_ARGS"
+    java -jar resources/ManKalah.jar "java -jar resources/Test_Agents/JimmyPlayer.jar" "$AGENT_RUN_WITH_ARGS" > results/test.log
   else
     java -jar resources/ManKalah.jar "$AGENT_RUN_WITH_ARGS" "java -jar resources/Test_Agents/JimmyPlayer.jar"
   fi
@@ -20,8 +26,8 @@ if [[ $* == *-g* || $* == *-a* ]]
 then
   if [[ $* == *--second* ]]
   then
-    java -jar resources/ManKalah.jar "java -jar resources/Test_Agents/Group2Agent.jar" "$AGENT_RUN_WITH_ARGS"
+    java -jar resources/ManKalah.jar "java -jar resources/Test_Agents/Group2Agent.jar" "$AGENT_RUN_WITH_ARGS" > results/test.log
   else
-    java -jar resources/ManKalah.jar "$AGENT_RUN_WITH_ARGS" "java -jar resources/Test_Agents/Group2Agent.jar"
+    java -jar resources/ManKalah.jar "$AGENT_RUN_WITH_ARGS" "java -jar resources/Test_Agents/Group2Agent.jar" > results/test.log
   fi
 fi
