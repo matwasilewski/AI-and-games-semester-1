@@ -5,7 +5,7 @@ import com.MKAgent.*;
 import java.util.ArrayList;
 
 public class Minimax {
-    private int maxDepth = 8;
+    private int maxDepth = 5;
 
     private Scoring scoring;
 
