@@ -68,7 +68,9 @@ public class Main {
                 new SeedsInAgentsStoreHeuristic(parseInt(args[3])),
                 new NumberOfStonesCloseToHomeHeuristic(parseInt(args[4])),
                 new NumberOfStonesFarFromHomeHeuristic(parseInt(args[5])),
-                new NumberOfStonesInMiddleHeuristic(parseInt(args[6]))
+                new NumberOfStonesInMiddleHeuristic(parseInt(args[6])),
+                new HowCloseToLosing(parseInt(args[7])),
+                new HowCloseToWinning(parseInt(args[8]))
         ), gameOverNodeScoreWeight);
 
         Minimax minimax = new Minimax(maxDepth, maxLevelsParallel, scoring);
