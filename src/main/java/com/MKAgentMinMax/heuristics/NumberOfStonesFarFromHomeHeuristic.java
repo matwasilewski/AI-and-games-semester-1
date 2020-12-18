@@ -17,6 +17,6 @@ public class NumberOfStonesFarFromHomeHeuristic extends Heuristic {
      */
     @Override
     public Integer getScore(Board board) {
-        return board.getSeeds(board.getAgentsSide(), 1) + board.getSeeds(board.getAgentsSide(), 2);
+        return -1 * board.getSeeds(board.getAgentsSide(), 1) + board.getSeeds(board.getAgentsSide(), 2);
     }
 }
