@@ -2,6 +2,7 @@ package com.MKAgent;
 
 import java.util.Observable;
 
+import static com.MKAgent.Side.NORTH;
 import static com.MKAgent.Side.SOUTH;
 
 /**
@@ -316,6 +317,22 @@ public class Board extends Observable implements Cloneable
     	board[indexOfSide(side)][0] += seeds;
     	this.setChanged();
     }
+
+	/**
+	 * Returns total number of seeds
+	 */
+	public int getNoOfSeeds() {
+		int seedCount = 0;
+		seedCount += this.getSeedsInStore(SOUTH);
+		seedCount += this.getSeedsInStore(NORTH);
+		for (int i=0; i <= holes; i++)
+		{
+			seedCount += board[NORTH_ROW][i];
+			seedCount += board[SOUTH_ROW][i];
+		}
+		return seedCount;
+	}
+
 
 	@Override
 	public String toString()
