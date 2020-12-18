@@ -10,7 +10,7 @@ fi
 #- intArg4 - weight of first heuristic
 #- intArg5 - weight of second heuristic
 
-export AGENT_RUN_WITH_ARGS="java -jar target/minimaxBot-1.0.1.jar 10 0 5 1 1 1 1 1 1"
+export AGENT_RUN_WITH_ARGS="java -jar minimaxBot-1.0.1.jar 10 0 5 1 1 1 1 1 1"
 
 
 if [[ $* == *-j* || $* == *-a* ]]
