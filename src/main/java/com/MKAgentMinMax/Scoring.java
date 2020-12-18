@@ -18,7 +18,7 @@ public class Scoring {
     }
 
     public int getScore(Board board){
-        return heuristics.stream().map(heuristic -> heuristic.getScore(board)).mapToInt(Integer::intValue).sum();
+        return heuristics.stream().map(heuristic -> heuristic.getWeightedScore(board)).mapToInt(Integer::intValue).sum();
     }
 
     public int getGameOverScore(Board board) {

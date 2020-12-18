@@ -60,8 +60,8 @@ public class Main {
      */
     public static void main(String[] args) {
         int maxDepth = parseInt(args[0]);
-        int maxLevelsParallel = parseInt(args[1]);
-        int gameOverNodeScoreWeight = parseInt(args[2]);
+        int maxLevelsParallel = parseInt(args[1]); // can be 0 1 or 2
+        int gameOverNodeScoreWeight = parseInt(args[2]); //
 
         Scoring scoring = new Scoring(asList(
                 new DifferenceOfSeedsInStoreHeuristic(parseInt(args[2])),

@@ -11,8 +11,8 @@ public class DifferenceOfSeedsInStoreHeuristic extends Heuristic {
     }
 
     @Override
-    public Integer getScore(Board board) {
-        return weight * board.getSeedsInStore(board.getAgentsSide()) - board.getSeedsInStore(board.getAgentsSide().opposite());
+    protected Integer getScore(Board board) {
+        return board.getSeedsInStore(board.getAgentsSide()) - board.getSeedsInStore(board.getAgentsSide().opposite());
     }
 
 }

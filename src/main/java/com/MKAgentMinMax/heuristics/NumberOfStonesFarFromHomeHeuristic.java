@@ -16,7 +16,7 @@ public class NumberOfStonesFarFromHomeHeuristic extends Heuristic {
      * @return If agent player is winning result > 0 else result < 0
      */
     @Override
-    public Integer getScore(Board board) {
+    protected Integer getScore(Board board) {
         return -1 * board.getSeeds(board.getAgentsSide(), 1) + board.getSeeds(board.getAgentsSide(), 2);
     }
 }

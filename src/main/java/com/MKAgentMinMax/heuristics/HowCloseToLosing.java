@@ -15,7 +15,7 @@ public class HowCloseToLosing extends Heuristic {
      * @return If agent player is winning result > 0 else result < 0
      */
     @Override
-    public Integer getScore(Board board) {
+    protected Integer getScore(Board board) {
         return board.getNoOfSeeds() - board.getSeedsInStore(board.getAgentsSide().opposite());
     }
 }

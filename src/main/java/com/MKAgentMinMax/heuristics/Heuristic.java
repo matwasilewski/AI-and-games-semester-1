@@ -10,5 +10,9 @@ public abstract class Heuristic {
         this.weight = weight;
     }
 
-    public abstract Integer getScore(Board board);
+    public Integer getWeightedScore(Board board) {
+        return weight * this.getScore(board);
+    };
+
+    protected abstract Integer getScore(Board board);
 }

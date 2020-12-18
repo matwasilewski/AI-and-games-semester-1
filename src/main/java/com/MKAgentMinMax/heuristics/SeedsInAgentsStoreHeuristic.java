@@ -9,7 +9,7 @@ public class SeedsInAgentsStoreHeuristic extends Heuristic {
     }
 
     @Override
-    public Integer getScore(Board board) {
+    protected Integer getScore(Board board) {
         return board.getSeedsInStore(board.getAgentsSide());
     }
 }
