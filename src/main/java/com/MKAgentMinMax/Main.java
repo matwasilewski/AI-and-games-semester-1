@@ -64,13 +64,13 @@ public class Main {
         int gameOverNodeScoreWeight = parseInt(args[2]); //
 
         Scoring scoring = new Scoring(asList(
-                new DifferenceOfSeedsInStoreHeuristic(parseInt(args[2])),
-                new SeedsInAgentsStoreHeuristic(parseInt(args[3])),
-                new NumberOfStonesCloseToHomeHeuristic(parseInt(args[4])),
-                new NumberOfStonesFarFromHomeHeuristic(parseInt(args[5])),
-                new NumberOfStonesInMiddleHeuristic(parseInt(args[6])),
-                new HowCloseToLosing(parseInt(args[7])),
-                new HowCloseToWinning(parseInt(args[8]))
+                new DifferenceOfSeedsInStoreHeuristic(parseInt(args[3])),
+                new SeedsInAgentsStoreHeuristic(parseInt(args[4])),
+                new NumberOfStonesCloseToHomeHeuristic(parseInt(args[5])),
+                new NumberOfStonesFarFromHomeHeuristic(parseInt(args[6])),
+                new NumberOfStonesInMiddleHeuristic(parseInt(args[7])),
+                new HowCloseToLosing(parseInt(args[8])),
+                new HowCloseToWinning(parseInt(args[9]))
         ), gameOverNodeScoreWeight);
 
         Minimax minimax = new Minimax(maxDepth, maxLevelsParallel, scoring);
