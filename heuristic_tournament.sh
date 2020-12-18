@@ -10,7 +10,7 @@ fi
 #- intArg4 - weight of second heuristic
 rm heuristic_results/test/* -r
 
-for MAX_DEPTH in 3 4
+for MAX_DEPTH in 5 6
 do
 for WEIGHT_OF_GAME_ORVER_SCORE in 0 2 4 6 8
 do
