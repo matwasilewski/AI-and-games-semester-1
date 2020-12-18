@@ -4,7 +4,6 @@ unjar/*
 .idea/*
 out/*
 out/
-target/*
 /minimaxBot.iml
 results_test/*
 heuristic_results/test/*

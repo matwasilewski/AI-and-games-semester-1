@@ -1,2 +1,0 @@
-Player: 2-0-0-0-0-0-0 Total win: 2 Total played: 4 Avg time: 0.25
-Player: 2-0-0-0-0-0-1 Total win: 2 Total played: 4 Avg time: 0.75
