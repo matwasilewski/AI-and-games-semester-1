@@ -1,1 +1,2 @@
-Player: 10-0-0-0 Total win: 24 Total played: 36 Avg time: 163.97222222222223
+Player: 2-0-0-0-0-0-0 Total win: 2 Total played: 4 Avg time: 0.25
+Player: 2-0-0-0-0-0-1 Total win: 2 Total played: 4 Avg time: 0.5
